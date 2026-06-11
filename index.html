@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Lukas Estifanos — OS</title>
-<meta name="description" content="Lukas Estifanos — Software Engineer. A desktop you can wander through." />
+<title>Lukas Estifanos · OS</title>
+<meta name="description" content="Lukas Estifanos · Software Engineer. A desktop you can wander through." />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Newsreader:ital,opsz,wght@0,6..72,200..700;1,6..72,200..700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
 <style>
 /* ============================================================
-   LUKAS ESTIFANOS — OS  ·  looks like macOS, reads like a magazine
+   LUKAS ESTIFANOS · OS  ·  looks like macOS, reads like a magazine
    Chrome = system font (SF on a Mac).  Content = editorial serif.
    ============================================================ */
 
@@ -45,12 +45,6 @@ a{color:inherit}
   transform:translate(-2px,-1px);transition:transform .08s var(--ease),opacity .2s;
   will-change:transform;filter:drop-shadow(1px 2px 1px rgba(0,0,0,.4))}
 #cursor.click{transform:translate(-2px,-1px) scale(.82)}
-#ring{position:fixed;top:0;left:0;z-index:99998;pointer-events:none;width:42px;height:42px;
-  margin:-21px 0 0 -21px;border-radius:50%;border:1px solid rgba(255,255,255,.7);
-  box-shadow:0 0 18px rgba(255,255,255,.2);opacity:0;will-change:transform;
-  transition:width .25s var(--ease),height .25s var(--ease),margin .25s var(--ease),border-color .25s,opacity .3s}
-#ring.show{opacity:.85}
-#ring.big{width:64px;height:64px;margin:-32px 0 0 -32px;border-color:rgba(127,210,255,.9)}
 
 /* ===================== BOOT (black + pear + bar) ===================== */
 #boot{position:fixed;inset:0;z-index:9000;background:#000;
@@ -109,7 +103,7 @@ a{color:inherit}
 .mb-right svg{display:block;opacity:.95}
 .mb-clock{font-variant-numeric:tabular-nums;min-width:150px;text-align:right;letter-spacing:.01em}
 
-/* dropdown menus (light, vibrant — like real macOS menus) */
+/* dropdown menus (light, vibrant, like real macOS menus) */
 .menu-pop{position:fixed;top:calc(var(--menubar-h) + 4px);z-index:7100;min-width:236px;
   background:rgba(246,246,247,.78);backdrop-filter:blur(30px) saturate(180%);-webkit-backdrop-filter:blur(30px) saturate(180%);
   border:1px solid rgba(255,255,255,.5);border-radius:9px;box-shadow:var(--shadow);padding:5px;
@@ -292,10 +286,10 @@ a{color:inherit}
     <rect x="224" y="262" width="116" height="24" rx="12" fill="#eafff2"/>
   </symbol>
 
-  <!-- Folder -->
+  <!-- Folder (sized to match the squircle icons' optical height) -->
   <symbol id="ic-folder" viewBox="0 0 512 512">
-    <path d="M70 196q0-34 34-34h92l40 40h172q34 0 34 34v8H70Z" fill="#2f7ec9"/>
-    <path d="M70 214q0-30 30-30h312q30 0 30 30v140q0 30-30 30H100q-30 0-30-30Z" fill="url(#g-folder)"/>
+    <path d="M40 152q0-38 38-38h116q16 0 27 10l37 34h199q38 0 38 38v16H40Z" fill="#2f7ec9"/>
+    <path d="M40 178q0-36 36-36h372q36 0 36 36v178q0 38-38 38H78q-38 0-38-38Z" fill="url(#g-folder)"/>
   </symbol>
 
   <!-- Mail -->
@@ -362,7 +356,6 @@ a{color:inherit}
 </svg>
 
 <!-- ===================== CUSTOM CURSOR ===================== -->
-<div id="ring"></div>
 <svg id="cursor" viewBox="0 0 22 26" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M2 2 L2 21 L7 16.5 L10.5 24 L13.5 22.7 L10 15.2 L17 15 Z" fill="#1a1714" stroke="#fbf8f1" stroke-width="1.4" stroke-linejoin="round"/>
 </svg>
@@ -418,7 +411,7 @@ a{color:inherit}
     <!-- control center -->
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="2.5" width="13" height="4.4" rx="2.2" stroke="#fff" stroke-width="1.2"/><circle cx="5" cy="4.7" r="1.4" fill="#fff"/><rect x="1.5" y="9.1" width="13" height="4.4" rx="2.2" stroke="#fff" stroke-width="1.2"/><circle cx="11" cy="11.3" r="1.4" fill="#fff"/></svg>
     <span class="mb-item" data-open="contact" style="font-style:italic">Hire me</span>
-    <span class="mb-clock" id="clock">—</span>
+    <span class="mb-clock" id="clock"></span>
   </div>
 </div>
 
@@ -429,7 +422,7 @@ a{color:inherit}
   <div class="row" data-open="projects"><span>Recent Work</span><span>⌘R</span></div>
   <div class="row" data-open="term"><span>Terminal…</span><span>⌘T</span></div>
   <div class="sep"></div>
-  <div class="row muted"><span>Available — Summer 2027</span><span>●</span></div>
+  <div class="row muted"><span>Available · Summer 2027</span><span>●</span></div>
 </div>
 <div class="menu-pop" id="pop-brand" style="left:40px">
   <div class="row" data-open="about"><span>Who is this</span><span>⌘A</span></div>
@@ -453,18 +446,18 @@ a{color:inherit}
 <div class="win" id="win-about" style="top:14%;left:9%">
   <div class="titlebar">
     <div class="lights"><i class="light red" data-act="close"></i><i class="light yel" data-act="min"></i><i class="light grn" data-act="zoom"></i></div>
-    <div class="win-title">Read Me <small>— about.rtf</small></div><div class="spacer"></div>
+    <div class="win-title">Read Me <small>·about.rtf</small></div><div class="spacer"></div>
   </div>
   <div class="win-body">
     <div class="kicker">Software Engineer · Cincinnati, OH</div>
     <h1 class="display">Lukas<br><em>Estifanos.</em></h1>
-    <p class="lede">I build full-stack distributed systems — the kind where a web client, a mobile client and a single Postgres brain all have to agree. Lately: <em>multi-agent automation pipelines</em> moving 10,000+ tasks a month. I like owning the whole stack, from the schema decision down to the systemd unit that never falls over.</p>
+    <p class="lede">I build full-stack distributed systems, the kind where a web client, a mobile client and a single Postgres brain all have to agree. Lately: <em>multi-agent automation pipelines</em> moving 10,000+ tasks a month. I like owning the whole stack, from the schema decision down to the systemd unit that never falls over.</p>
     <div class="rule"></div>
     <div class="meta">
       <div class="cell"><div class="lbl">Currently</div><div class="val">Forward Deployed Software Engineer<br><span class="muted">Triptych / Flowstage</span></div></div>
       <div class="cell"><div class="lbl">Studying</div><div class="val">B.S. Information Technology<br><span class="muted">University of Cincinnati · Software Dev Track</span></div></div>
       <div class="cell"><div class="lbl">Graduating</div><div class="val">May 2028 · <span class="muted">GPA 3.45 / 4.0</span></div></div>
-      <div class="cell"><div class="lbl">Open to</div><div class="val">Internship — <em>Summer 2027</em></div></div>
+      <div class="cell"><div class="lbl">Open to</div><div class="val">Internship, <em>Summer 2027</em></div></div>
       <div class="cell"><div class="lbl">Email</div><div class="val"><a href="mailto:lukasestifanos23@gmail.com">lukasestifanos23@gmail.com</a></div></div>
       <div class="cell"><div class="lbl">GitHub</div><div class="val"><a href="https://github.com/lukaspestifanos" target="_blank" rel="noopener">@lukaspestifanos</a></div></div>
     </div>
@@ -479,29 +472,29 @@ a{color:inherit}
 <div class="win" id="win-work" style="top:12%;left:16%">
   <div class="titlebar">
     <div class="lights"><i class="light red" data-act="close"></i><i class="light yel" data-act="min"></i><i class="light grn" data-act="zoom"></i></div>
-    <div class="win-title">Experience <small>— work.md</small></div><div class="spacer"></div>
+    <div class="win-title">Experience <small>·work.md</small></div><div class="spacer"></div>
   </div>
   <div class="win-body">
     <div class="kicker">Where I've shipped</div>
     <h2 class="display" style="font-size:clamp(32px,4.6vw,52px)">A short<br>working <em>history.</em></h2>
     <div class="rule"></div>
     <div class="job">
-      <div class="when">APR 2026 — PRESENT</div>
+      <div class="when">APR 2026 → PRESENT</div>
       <div class="h2">Triptych / Flowstage</div>
       <div class="role">Forward Deployed Software Engineer</div>
       <ul>
-        <li>Built TypeScript multi-agent automation pipelines processing <strong>10,000+ content-generation tasks monthly</strong> across 100+ client accounts — integrating the Claude API with a Supabase / PostgreSQL backend.</li>
+        <li>Built TypeScript multi-agent automation pipelines processing <strong>10,000+ content-generation tasks monthly</strong> across 100+ client accounts, integrating the Claude API with a Supabase / PostgreSQL backend.</li>
         <li>Cut production incident resolution time by <strong>40%</strong> by owning all DevOps, database optimization, and full-stack debugging across distributed TS/Postgres infrastructure.</li>
-        <li>Drove end-to-end delivery of <strong>4 production workstreams</strong> on a 14-week roadmap — technical design, schema decisions, and perf work — with engineering leadership and 10+ enterprise clients.</li>
+        <li>Drove end-to-end delivery of <strong>4 production workstreams</strong> on a 14-week roadmap (technical design, schema decisions, and perf work) with engineering leadership and 10+ enterprise clients.</li>
         <li>Designed multi-tenant architecture for variable load across hundreds of concurrent accounts; established monitoring patterns and operational runbooks.</li>
       </ul>
     </div>
     <div class="job">
-      <div class="when">FEB 2025 — PRESENT</div>
+      <div class="when">FEB 2025 → PRESENT</div>
       <div class="h2">Off Record Sounds</div>
       <div class="role">Operations Coordinator &amp; Partnerships</div>
       <ul>
-        <li>Built and maintained a Python service for production data monitoring — runs continuously under daily load with <strong>zero manual intervention</strong> and a 60+ second performance advantage over competing systems.</li>
+        <li>Built and maintained a Python service for production data monitoring that runs continuously under daily load with <strong>zero manual intervention</strong> and a 60+ second performance advantage over competing systems.</li>
         <li>Engineered a scalable data-ingestion and publishing pipeline showcasing systems-level optimization and reliable production operation.</li>
       </ul>
     </div>
@@ -512,7 +505,7 @@ a{color:inherit}
 <div class="win" id="win-projects" style="top:16%;left:22%">
   <div class="titlebar">
     <div class="lights"><i class="light red" data-act="close"></i><i class="light yel" data-act="min"></i><i class="light grn" data-act="zoom"></i></div>
-    <div class="win-title">Projects <small>— ~/work</small></div><div class="spacer"></div>
+    <div class="win-title">Projects <small>·~/work</small></div><div class="spacer"></div>
   </div>
   <div class="win-body">
     <div class="kicker">Built solo, end to end</div>
@@ -520,12 +513,12 @@ a{color:inherit}
     <div class="rule"></div>
     <a class="proj" href="https://tails-mvp-edition.vercel.app" target="_blank" rel="noopener">
       <div class="top"><h3>Tails</h3><span class="link">tails-mvp-edition.vercel.app ↗</span></div>
-      <p>A full-stack distributed system with multi-client architecture. Solo-built, separated <strong>web (Next.js / Vercel)</strong> and <strong>mobile (React Native / Expo)</strong> clients sharing a single Supabase / PostgreSQL backend. Reached <strong>50+ active users</strong> and App Store approval — a study in API contracts, database normalization, and cross-platform data consistency.</p>
+      <p>A full-stack distributed system with multi-client architecture. Solo-built, separated <strong>web (Next.js / Vercel)</strong> and <strong>mobile (React Native / Expo)</strong> clients sharing a single Supabase / PostgreSQL backend. Reached <strong>50+ active users</strong> and App Store approval, a study in API contracts, database normalization, and cross-platform data consistency.</p>
       <span class="arrow">→</span>
     </a>
     <a class="proj" href="https://github.com/lukaspestifanos" target="_blank" rel="noopener">
       <div class="top"><h3>What's The Move</h3><span class="link">github ↗</span></div>
-      <p>A full-stack event-discovery app integrating the <strong>Ticketmaster</strong> and <strong>Meetup</strong> REST APIs with a stateful backend — session management, authentication, and search filtering all working in concert.</p>
+      <p>A full-stack event-discovery app integrating the <strong>Ticketmaster</strong> and <strong>Meetup</strong> REST APIs with a stateful backend: session management, authentication, and search filtering all working in concert.</p>
       <span class="arrow">→</span>
     </a>
   </div>
@@ -535,7 +528,7 @@ a{color:inherit}
 <div class="win" id="win-skills" style="top:18%;left:28%">
   <div class="titlebar">
     <div class="lights"><i class="light red" data-act="close"></i><i class="light yel" data-act="min"></i><i class="light grn" data-act="zoom"></i></div>
-    <div class="win-title">Skills <small>— toolkit.cfg</small></div><div class="spacer"></div>
+    <div class="win-title">Skills <small>·toolkit.cfg</small></div><div class="spacer"></div>
   </div>
   <div class="win-body">
     <div class="kicker">What I reach for</div>
@@ -557,10 +550,10 @@ a{color:inherit}
 <div class="win" id="win-contact" style="top:20%;left:30%;width:min(560px,92vw)">
   <div class="titlebar">
     <div class="lights"><i class="light red" data-act="close"></i><i class="light yel" data-act="min"></i><i class="light grn" data-act="zoom"></i></div>
-    <div class="win-title">Get in touch <small>— hire.me</small></div><div class="spacer"></div>
+    <div class="win-title">Get in touch <small>·hire.me</small></div><div class="spacer"></div>
   </div>
   <div class="win-body">
-    <div class="kicker">Available — Internship · Summer 2027</div>
+    <div class="kicker">Available · Internship · Summer 2027</div>
     <h2 class="display" style="font-size:clamp(34px,5vw,58px)">Let's build<br><em>something.</em></h2>
     <p class="lede">Got an internship, a hard systems problem, or just want to talk shop? My inbox is open.</p>
     <div class="rule"></div>
@@ -582,7 +575,7 @@ a{color:inherit}
 <div class="win term" id="win-term" style="top:22%;left:34%;width:min(640px,92vw)">
   <div class="titlebar">
     <div class="lights"><i class="light red" data-act="close"></i><i class="light yel" data-act="min"></i><i class="light grn" data-act="zoom"></i></div>
-    <div class="win-title">Terminal <small>— lukas@os: ~</small></div><div class="spacer"></div>
+    <div class="win-title">Terminal <small>·lukas@os: ~</small></div><div class="spacer"></div>
   </div>
   <div class="win-body"><div class="term-screen" id="termScreen"></div></div>
 </div>
@@ -630,18 +623,14 @@ window.addEventListener('load',()=>{
 });
 
 /* 2. CUSTOM CURSOR */
-const cur=document.getElementById('cursor'),ring=document.getElementById('ring');
-let mx=innerWidth/2,my=innerHeight/2,rx=mx,ry=my;
+const cur=document.getElementById('cursor');
+let mx=innerWidth/2,my=innerHeight/2;
 addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;
-  cur.style.transform=`translate(${mx-2}px,${my-1}px)`;ring.classList.add('show');});
+  cur.style.transform=`translate(${mx-2}px,${my-1}px)`;});
 addEventListener('mousedown',()=>cur.classList.add('click'));
 addEventListener('mouseup',()=>cur.classList.remove('click'));
-addEventListener('mouseleave',()=>{ring.classList.remove('show');cur.style.opacity=0});
-addEventListener('mouseenter',()=>cur.style.opacity=1);
-(function loop(){rx+=(mx-rx)*.18;ry+=(my-ry)*.18;ring.style.transform=`translate(${rx}px,${ry}px)`;requestAnimationFrame(loop);})();
-const HOT='a,.dock-item,.dicon,.mb-item,.mb-pine,.light,.proj,.chip,.aqua,.menu-pop .row';
-document.addEventListener('mouseover',e=>{if(e.target.closest(HOT)){ring.classList.add('big');}});
-document.addEventListener('mouseout',e=>{if(e.target.closest(HOT)){ring.classList.remove('big');}});
+addEventListener('mouseleave',()=>{cur.style.opacity=0;});
+addEventListener('mouseenter',()=>{cur.style.opacity=1;});
 
 /* 3. PARALLAX */
 const layers=[...document.querySelectorAll('.layer')];
@@ -722,18 +711,18 @@ function runTerminal(){if(termRan)return;termRan=true;
   const el=document.getElementById('termScreen');
   const lines=[
     `<span class="pr">lukas@os</span>:<span class="c">~</span>$ whoami`,
-    `<span class="us">Lukas Estifanos</span> — Forward Deployed Software Engineer`,``,
+    `<span class="us">Lukas Estifanos</span> · Forward Deployed Software Engineer`,``,
     `<span class="pr">lukas@os</span>:<span class="c">~</span>$ neofetch`,
     `<span class="k">      .--.       </span> <span class="us">lukas</span>@<span class="us">os</span>`,
     `<span class="k">     |o_o |      </span> <span class="dim">-----------</span>`,
     `<span class="k">     |:_/ |      </span> <span class="c">OS</span>:    Lukas//OS  (Ubuntu · AlmaLinux)`,
     `<span class="k">    //   \\ \\     </span> <span class="c">Role</span>:  FDE @ Triptych / Flowstage`,
-    `<span class="k">   (|     | )    </span> <span class="c">Edu</span>:   B.S. IT — Univ. of Cincinnati '28`,
+    `<span class="k">   (|     | )    </span> <span class="c">Edu</span>:   B.S. IT · Univ. of Cincinnati '28`,
     `<span class="k">  /'\\_   _/\`\\    </span> <span class="c">Stack</span>: TypeScript · Python · Postgres`,
     `<span class="k">  \\___)=(___/    </span> <span class="c">Infra</span>: systemd · Apache · Samba · firewall`,
     `<span class="k">                 </span> <span class="c">Uptime</span>: shipping since 2025`,``,
     `<span class="pr">lukas@os</span>:<span class="c">~</span>$ cat status.txt`,
-    `<span class="us">▸ Available for an internship — Summer 2027.</span>`,
+    `<span class="us">▸ Available for an internship, Summer 2027.</span>`,
     `<span class="pr">lukas@os</span>:<span class="c">~</span>$ <span class="cursorblink"></span>`
   ];
   let i=0;(function next(){if(i>=lines.length)return;
