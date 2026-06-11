@@ -104,7 +104,7 @@ a{color:inherit}
 .mb-spring{flex:1}
 .mb-right{display:flex;align-items:center;gap:12px;font-size:13px}
 .mb-right svg{display:block;opacity:.95}
-.mb-clock{font-variant-numeric:tabular-nums;min-width:150px;text-align:right;letter-spacing:.01em}
+.mb-clock{font-variant-numeric:tabular-nums;min-width:150px;text-align:right;letter-spacing:.01em;white-space:nowrap;flex-shrink:0}
 
 /* dropdown menus (light, vibrant, like real macOS menus) */
 .menu-pop{position:fixed;top:calc(var(--menubar-h) + 4px);z-index:7100;min-width:236px;
@@ -258,6 +258,8 @@ a{color:inherit}
   .meta{grid-template-columns:1fr}
   #icons{display:none}
   .mb-item.hideable{display:none}
+  .mb-right .mb-item{display:none}   /* hide "Hire me" — it's in the dock */
+  .mb-util{display:none}             /* drop spotlight + control center for room */
   .mb-right{gap:9px}
   .mb-clock{min-width:0;font-size:12px}
   #dock-wrap{bottom:6px}
@@ -420,9 +422,9 @@ a{color:inherit}
     <!-- wifi -->
     <svg width="18" height="14" viewBox="0 0 18 14" fill="#fff"><path d="M9 13.2a1.5 1.5 0 100-3 1.5 1.5 0 000 3Z"/><path d="M9 4.2c2.4 0 4.6.9 6.3 2.5l1.4-1.5A11 11 0 009 2 11 11 0 001.3 5.2l1.4 1.5A8.6 8.6 0 019 4.2Z" opacity=".95"/><path d="M9 7.6c1.5 0 2.9.6 3.9 1.6l1.4-1.5A8 8 0 009 5.4 8 8 0 003.7 7.7l1.4 1.5A5.5 5.5 0 019 7.6Z"/></svg>
     <!-- spotlight -->
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="#fff" stroke-width="1.5"/><path d="M11 11l3.5 3.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg>
+    <svg class="mb-util" width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="#fff" stroke-width="1.5"/><path d="M11 11l3.5 3.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg>
     <!-- control center -->
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="2.5" width="13" height="4.4" rx="2.2" stroke="#fff" stroke-width="1.2"/><circle cx="5" cy="4.7" r="1.4" fill="#fff"/><rect x="1.5" y="9.1" width="13" height="4.4" rx="2.2" stroke="#fff" stroke-width="1.2"/><circle cx="11" cy="11.3" r="1.4" fill="#fff"/></svg>
+    <svg class="mb-util" width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="2.5" width="13" height="4.4" rx="2.2" stroke="#fff" stroke-width="1.2"/><circle cx="5" cy="4.7" r="1.4" fill="#fff"/><rect x="1.5" y="9.1" width="13" height="4.4" rx="2.2" stroke="#fff" stroke-width="1.2"/><circle cx="11" cy="11.3" r="1.4" fill="#fff"/></svg>
     <span class="mb-item" data-open="contact" style="font-style:italic">Hire me</span>
     <span class="mb-clock" id="clock"></span>
   </div>
@@ -655,25 +657,6 @@ addEventListener('mousemove',e=>{tx=(e.clientX/innerWidth-.5);ty=(e.clientY/inne
   for(const l of layers){const d=parseFloat(l.dataset.depth)||10;
     l.style.transform=`translate(${-cxp*d}px,${-cyp*d*.6}px)`;}
   requestAnimationFrame(para);})();
-
-/* 3b. TILT PARALLAX — feed gyroscope into the same tx/ty on mobile */
-if(isTouch){
-  let baseB=null;
-  const onTilt=e=>{
-    if(e.gamma==null||e.beta==null)return;
-    if(baseB===null)baseB=e.beta;                       // calibrate to however it's being held
-    const g=Math.max(-1,Math.min(1,e.gamma/35));        // left/right tilt
-    const b=Math.max(-1,Math.min(1,(e.beta-baseB)/35)); // forward/back tilt
-    tx=g*.6;ty=b*.6;
-  };
-  const start=()=>addEventListener('deviceorientation',onTilt);
-  const DOE=window.DeviceOrientationEvent;
-  if(DOE&&typeof DOE.requestPermission==='function'){   // iOS 13+ needs a gesture to opt in
-    const ask=()=>{DOE.requestPermission().then(s=>{if(s==='granted')start();}).catch(()=>{});};
-    addEventListener('touchend',ask,{once:true});
-    addEventListener('click',ask,{once:true});
-  }else start();                                         // Android & others: just listen
-}
 
 /* 4. LIVE CLOCK */
 const clk=document.getElementById('clock');
