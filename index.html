@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lukas Estifanos — OS</title>
+<meta name="description" content="Lukas Estifanos — Software Engineer. A desktop you can wander through." />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Newsreader:ital,opsz,wght@0,6..72,200..700;1,6..72,200..700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+<style>
+/* ============================================================
+   LUKAS ESTIFANOS — OS  ·  looks like macOS, reads like a magazine
+   Chrome = system font (SF on a Mac).  Content = editorial serif.
+   ============================================================ */
+
+:root{
+  --ink:#1d1b18;
+  --gold:#c79a3b;
+  --rust:#b4471f;
+  --sky:#2f7fe0;
+  --hair:rgba(29,27,24,.13);
+  --shadow:0 30px 70px -26px rgba(8,12,24,.7), 0 8px 22px -10px rgba(8,12,24,.45);
+  --menubar-h:26px;
+  --ease:cubic-bezier(.2,.8,.2,1);
+  --ui:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{
+  font-family:"Newsreader",Georgia,serif;
+  color:var(--ink);
+  background:#05070f;
+  overflow:hidden;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+a{color:inherit}
+*{cursor:none !important}
+
+/* ===================== CUSTOM CURSOR (mac arrow) ===================== */
+#cursor{position:fixed;top:0;left:0;z-index:99999;pointer-events:none;width:22px;height:26px;
+  transform:translate(-2px,-1px);transition:transform .08s var(--ease),opacity .2s;
+  will-change:transform;filter:drop-shadow(1px 2px 1px rgba(0,0,0,.4))}
+#cursor.click{transform:translate(-2px,-1px) scale(.82)}
+#ring{position:fixed;top:0;left:0;z-index:99998;pointer-events:none;width:42px;height:42px;
+  margin:-21px 0 0 -21px;border-radius:50%;border:1px solid rgba(255,255,255,.7);
+  box-shadow:0 0 18px rgba(255,255,255,.2);opacity:0;will-change:transform;
+  transition:width .25s var(--ease),height .25s var(--ease),margin .25s var(--ease),border-color .25s,opacity .3s}
+#ring.show{opacity:.85}
+#ring.big{width:64px;height:64px;margin:-32px 0 0 -32px;border-color:rgba(127,210,255,.9)}
+
+/* ===================== BOOT (black + pear + bar) ===================== */
+#boot{position:fixed;inset:0;z-index:9000;background:#000;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:46px;
+  transition:opacity 1s ease 1.4s,visibility 0s linear 2.4s}
+#boot.done{opacity:0;visibility:hidden}
+#boot .pine{width:96px;height:108px;opacity:.96;animation:boobob 3s ease-in-out infinite}
+@keyframes boobob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.boot-bar{width:230px;height:5px;border-radius:4px;background:rgba(255,255,255,.16);overflow:hidden}
+.boot-bar i{display:block;height:100%;width:0;border-radius:4px;background:#fff;animation:load 2.2s var(--ease) forwards}
+@keyframes load{0%{width:0}55%{width:62%}100%{width:100%}}
+
+/* ===================== DESKTOP / WALLPAPER ===================== */
+#desk{position:fixed;inset:0;z-index:1;overflow:hidden;opacity:0;transform:scale(1.05);
+  transition:opacity 1.1s ease 1.6s,transform 1.7s var(--ease) 1.6s}
+#desk.on{opacity:1;transform:scale(1)}
+/* --- macOS Big Sur (dusk) recreation --- */
+.wall-base{position:absolute;inset:0;background:linear-gradient(180deg,
+  #14224e 0%, #1d3a6e 19%, #2f5f93 36%, #4d8bb0 52%, #8fbecb 63%,
+  #e6b483 73%, #d49a7e 81%, #6f5f86 92%, #34324f 100%)}
+.layer{position:absolute;will-change:transform}
+/* optional real-photo wallpaper: drop assets/wallpaper.jpg and it auto-covers the gradient */
+#wallpaper-img{position:absolute;inset:0;background:center/cover no-repeat;opacity:0;transition:opacity .6s}
+.bs-sun{position:absolute;left:50%;top:47%;width:62vmax;height:62vmax;transform:translate(-50%,-50%);
+  background:radial-gradient(circle,rgba(255,230,182,.9) 0%,rgba(255,206,150,.4) 22%,rgba(255,180,140,0) 56%);
+  mix-blend-mode:screen;filter:blur(2px);pointer-events:none}
+.bs-haze{position:absolute;inset:0;mix-blend-mode:screen;pointer-events:none;
+  background:linear-gradient(180deg,transparent 48%,rgba(222,236,246,.2) 61%,transparent 73%)}
+.bs-stars{inset:0;opacity:.55}
+.bs-stars i{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;box-shadow:0 0 5px #fff;animation:tw 3.5s ease-in-out infinite}
+@keyframes tw{0%,100%{opacity:.12}50%{opacity:.85}}
+.ridge{left:-6%;right:-6%;width:112%;bottom:0}
+.ridge svg{display:block;width:100%;height:auto}
+.r-far{bottom:9%}.r-mid{bottom:3.5%}.r-near{bottom:-1%}
+
+#grain{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+#vign{position:fixed;inset:0;z-index:2;pointer-events:none;box-shadow:inset 0 0 240px 30px rgba(2,5,15,.5)}
+
+/* ===================== MENU BAR (dark translucent, white text) ===================== */
+#menubar{position:fixed;top:0;left:0;right:0;height:var(--menubar-h);z-index:7000;
+  display:flex;align-items:center;gap:1px;padding:0 10px;
+  background:rgba(18,22,32,.34);backdrop-filter:blur(26px) saturate(180%);-webkit-backdrop-filter:blur(26px) saturate(180%);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  font-family:var(--ui);font-size:13.5px;color:#fff;
+  text-shadow:0 1px 1px rgba(0,0,0,.25);
+  transform:translateY(-100%);transition:transform .8s var(--ease) 2s}
+#menubar.on{transform:none}
+.mb-pine{display:grid;place-items:center;padding:0 9px}
+.mb-pine svg{width:15px;height:17px}
+.mb-item{padding:2px 9px;border-radius:5px;line-height:1;white-space:nowrap;transition:background .12s,color .12s}
+.mb-item.brand{font-weight:600}
+.mb-item:hover,.mb-pine:hover{background:rgba(255,255,255,.22)}
+.mb-spring{flex:1}
+.mb-right{display:flex;align-items:center;gap:12px;font-size:13px}
+.mb-right svg{display:block;opacity:.95}
+.mb-clock{font-variant-numeric:tabular-nums;min-width:150px;text-align:right;letter-spacing:.01em}
+
+/* dropdown menus (light, vibrant — like real macOS menus) */
+.menu-pop{position:fixed;top:calc(var(--menubar-h) + 4px);z-index:7100;min-width:236px;
+  background:rgba(246,246,247,.78);backdrop-filter:blur(30px) saturate(180%);-webkit-backdrop-filter:blur(30px) saturate(180%);
+  border:1px solid rgba(255,255,255,.5);border-radius:9px;box-shadow:var(--shadow);padding:5px;
+  font-family:var(--ui);font-size:13.5px;color:#1d1b18;
+  opacity:0;transform:translateY(-6px) scale(.98);pointer-events:none;transform-origin:top left;
+  transition:.15s var(--ease)}
+.menu-pop.open{opacity:1;transform:none;pointer-events:auto}
+.menu-pop .row{display:flex;justify-content:space-between;gap:24px;padding:5px 12px;border-radius:5px}
+.menu-pop .row:hover{background:var(--sky);color:#fff}
+.menu-pop .row span:last-child{opacity:.5;font-size:12px}
+.menu-pop .row:hover span:last-child{opacity:.85;color:#fff}
+.menu-pop .sep{height:1px;background:rgba(0,0,0,.1);margin:5px 8px}
+.menu-pop .row.muted{opacity:.55}.menu-pop .row.muted:hover{background:transparent;color:inherit}
+
+/* ===================== DESKTOP ICONS ===================== */
+#icons{position:fixed;top:42px;right:20px;z-index:50;display:flex;flex-direction:column;gap:20px;align-items:center}
+.dicon{width:84px;display:flex;flex-direction:column;align-items:center;gap:5px;text-align:center;
+  opacity:0;transform:translateY(10px);animation:popin .6s var(--ease) forwards}
+.dicon .gl{width:54px;height:54px;filter:drop-shadow(0 6px 10px rgba(0,0,0,.4));transition:transform .2s var(--ease)}
+.dicon .gl svg{width:100%;height:100%;display:block}
+.dicon:hover .gl{transform:translateY(-3px) scale(1.05)}
+.dicon span{font-family:var(--ui);font-size:12px;color:#fff;line-height:1.2;
+  text-shadow:0 1px 4px rgba(0,0,0,.85);padding:1px 5px;border-radius:4px}
+.dicon.sel span{background:var(--sky)}
+@keyframes popin{to{opacity:1;transform:none}}
+
+/* ===================== WINDOWS ===================== */
+.win{position:fixed;z-index:100;width:min(720px,92vw);
+  background:rgba(250,249,246,.97);border:1px solid rgba(255,255,255,.55);border-radius:12px;
+  box-shadow:var(--shadow);overflow:hidden;display:none;flex-direction:column;max-height:82vh;
+  backdrop-filter:blur(12px)}
+.win.open{display:flex;animation:winopen .4s var(--ease)}
+.win.closing{animation:winclose .24s var(--ease) forwards}
+@keyframes winopen{from{opacity:0;transform:scale(.93) translateY(16px)}to{opacity:1;transform:none}}
+@keyframes winclose{to{opacity:0;transform:scale(.95) translateY(10px)}}
+.win.min{animation:winmin .36s var(--ease) forwards}
+@keyframes winmin{to{opacity:0;transform:scale(.18) translateY(62vh);filter:blur(3px)}}
+
+.titlebar{height:40px;display:flex;align-items:center;gap:10px;padding:0 13px;flex-shrink:0;
+  background:linear-gradient(180deg,rgba(252,251,249,.9),rgba(238,236,231,.85));
+  border-bottom:1px solid var(--hair);cursor:grab !important;user-select:none}
+.titlebar:active{cursor:grabbing !important}
+.lights{display:flex;gap:8px}
+.light{width:12px;height:12px;border-radius:50%;position:relative;
+  box-shadow:inset 0 0 0 .5px rgba(0,0,0,.18)}
+.light.red{background:#ff5f57}.light.yel{background:#febc2e}.light.grn{background:#28c840}
+.lights:hover .light{filter:saturate(1.1)}
+.lights:hover .light::after{position:absolute;inset:0;display:grid;place-items:center;font-size:9px;font-weight:800;color:rgba(0,0,0,.5);font-family:var(--ui)}
+.lights:hover .red::after{content:"×"}.lights:hover .yel::after{content:"–"}.lights:hover .grn::after{content:"+"}
+.win-title{font-family:var(--ui);font-weight:600;font-size:13px;color:#4a4742;flex:1;text-align:center}
+.win-title small{font-weight:400;opacity:.55}
+.titlebar .spacer{width:52px}
+
+.win-body{padding:34px 40px 42px;overflow-y:auto;line-height:1.6;font-size:17px}
+.win-body::-webkit-scrollbar{width:13px}
+.win-body::-webkit-scrollbar-track{background:transparent}
+.win-body::-webkit-scrollbar-thumb{border:3px solid transparent;border-radius:10px;
+  background:rgba(0,0,0,.28);background-clip:content-box}
+.win-body::-webkit-scrollbar-thumb:hover{background:rgba(0,0,0,.42);background-clip:content-box}
+
+/* editorial content type */
+.kicker{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--rust);margin-bottom:14px}
+.display{font-family:"Fraunces",serif;font-weight:300;font-size:clamp(40px,6vw,76px);line-height:.92;letter-spacing:-.025em;font-variation-settings:"SOFT" 30,"WONK" 1}
+.display em{font-style:italic;color:var(--gold);font-weight:400}
+.lede{font-size:21px;line-height:1.5;margin-top:18px;max-width:54ch;color:#3a322b}
+.lede em{font-style:italic}
+.h2{font-family:"Fraunces",serif;font-weight:500;font-size:26px;margin:6px 0 4px;font-variation-settings:"SOFT" 20}
+.rule{height:1px;background:var(--hair);margin:26px 0}
+.muted{color:#6a5f54}
+
+.meta{display:grid;grid-template-columns:repeat(2,1fr);gap:18px 30px;margin-top:8px}
+.meta .cell{border-top:1px solid var(--hair);padding-top:10px}
+.meta .lbl{font-family:"Space Mono",monospace;font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--rust);margin-bottom:5px}
+.meta .val{font-size:17px}
+.meta a:hover{color:var(--sky);text-decoration:underline}
+
+.job{position:relative;padding-left:22px;margin-bottom:30px}
+.job::before{content:"";position:absolute;left:0;top:8px;width:9px;height:9px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px rgba(199,154,59,.18)}
+.job .when{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.12em;color:#8a7d6e}
+.job .role{font-style:italic;color:var(--rust);font-size:16px}
+.job ul{margin:10px 0 0 0;padding-left:18px}
+.job li{margin-bottom:7px;font-size:15.5px;color:#3f372f}
+.job li::marker{color:var(--gold)}
+
+.proj{display:block;border:1px solid var(--hair);border-radius:12px;padding:22px 24px;margin-bottom:18px;
+  background:linear-gradient(180deg,rgba(255,255,255,.6),rgba(255,255,255,.12));transition:.25s var(--ease);position:relative;overflow:hidden}
+.proj:hover{transform:translateY(-3px);box-shadow:0 18px 36px -20px rgba(0,0,0,.5);border-color:rgba(199,154,59,.5)}
+.proj .top{display:flex;justify-content:space-between;align-items:baseline;gap:14px}
+.proj h3{font-family:"Fraunces",serif;font-weight:600;font-size:24px;font-variation-settings:"SOFT" 20}
+.proj .link{font-family:"Space Mono",monospace;font-size:11.5px;color:var(--sky)}
+.proj p{margin-top:8px;font-size:15.5px;color:#3f372f;line-height:1.55}
+.proj .arrow{position:absolute;right:18px;bottom:14px;font-size:20px;opacity:0;transform:translateX(-6px);transition:.25s}
+.proj:hover .arrow{opacity:.7;transform:none}
+
+.skill-cat{font-family:"Space Mono",monospace;font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--rust);margin:20px 0 12px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-size:14px;padding:5px 13px;border-radius:20px;background:linear-gradient(180deg,rgba(255,255,255,.8),rgba(244,239,230,.55));border:1px solid var(--hair);transition:.2s var(--ease)}
+.chip:hover{background:linear-gradient(180deg,#bfe0ff,#5a93cf);color:#fff;transform:translateY(-2px);border-color:transparent}
+
+.aqua-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:26px}
+.aqua{font-family:var(--ui);font-weight:500;font-size:15px;padding:11px 20px;border-radius:10px;color:#fff;
+  background:linear-gradient(180deg,#3a93f0,#1f6fd6);
+  border:1px solid rgba(255,255,255,.25);box-shadow:0 6px 16px -7px rgba(31,111,214,.8),inset 0 1px 0 rgba(255,255,255,.4);
+  transition:.2s var(--ease);display:inline-flex;align-items:center;gap:8px}
+.aqua:hover{transform:translateY(-2px);box-shadow:0 12px 24px -9px rgba(31,111,214,.9),inset 0 1px 0 rgba(255,255,255,.4)}
+.aqua.gold{background:linear-gradient(180deg,#e8b94e,#c79a3b);color:#3a2a06;box-shadow:0 6px 16px -7px rgba(199,154,59,.8),inset 0 1px 0 rgba(255,255,255,.5)}
+
+.term .win-body{background:#0c1411;padding:0}
+.term-screen{font-family:"Space Mono",monospace;font-size:13.5px;line-height:1.65;color:#c8f5d8;padding:22px 24px;min-height:340px;text-shadow:0 0 6px rgba(120,255,180,.25)}
+.term-screen .pr{color:#7fd2ff}.term-screen .us{color:#c79a3b}.term-screen .k{color:#ff9d6e}
+.term-screen .c{color:#88c0ff}.term-screen .dim{color:#5f7a6c}
+.cursorblink{display:inline-block;width:8px;height:15px;background:#c8f5d8;vertical-align:-2px;animation:bk 1s step-end infinite}
+@keyframes bk{50%{opacity:0}}
+
+/* ===================== DOCK (squircle icons, no tiles) ===================== */
+#dock-wrap{position:fixed;left:0;right:0;bottom:8px;z-index:6000;display:flex;justify-content:center;pointer-events:none;
+  transform:translateY(150%);transition:transform .9s var(--ease) 2.2s}
+#dock-wrap.on{transform:none}
+#dock{pointer-events:auto;display:flex;align-items:flex-end;gap:7px;padding:6px 9px;height:72px;
+  background:rgba(255,255,255,.18);backdrop-filter:blur(28px) saturate(180%);-webkit-backdrop-filter:blur(28px) saturate(180%);
+  border:1px solid rgba(255,255,255,.28);border-radius:22px;
+  box-shadow:0 20px 50px -16px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.5)}
+.dock-item{position:relative;width:54px;height:54px;transform-origin:bottom center;will-change:transform;
+  transition:transform .14s var(--ease),margin .14s var(--ease)}
+.dock-item svg.ic{width:100%;height:100%;display:block;filter:drop-shadow(0 5px 7px rgba(0,0,0,.35))}
+.dock-item::after{content:attr(data-label);position:absolute;bottom:122%;left:50%;transform:translateX(-50%) scale(.9);
+  font-family:var(--ui);font-size:12.5px;white-space:nowrap;padding:3px 11px;border-radius:7px;
+  background:rgba(28,28,32,.82);color:#fff;opacity:0;transition:.16s;pointer-events:none}
+.dock-item:hover::after{opacity:1;transform:translateX(-50%) scale(1)}
+.dock-item .dot{position:absolute;bottom:-5px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.85);opacity:0;transition:.2s}
+.dock-item.run .dot{opacity:1}
+.dock-sep{width:1px;height:44px;background:rgba(255,255,255,.32);margin:0 4px;align-self:center}
+
+/* welcome hint */
+#hint{position:fixed;left:50%;top:48%;transform:translate(-50%,-50%);z-index:40;text-align:center;pointer-events:none;opacity:0;transition:opacity 1s ease 2.6s}
+#hint.on{opacity:1}
+#hint .big{font-family:"Fraunces",serif;font-weight:300;font-size:clamp(56px,12vw,160px);color:#fff;letter-spacing:-.03em;line-height:.85;font-variation-settings:"SOFT" 50,"WONK" 1;text-shadow:0 6px 40px rgba(0,0,0,.45)}
+#hint .big em{font-style:italic;font-weight:400}
+#hint .tag{font-family:var(--ui);font-size:12px;letter-spacing:.04em;color:rgba(255,255,255,.85);margin-top:22px;animation:bob 2.6s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0);opacity:.7}50%{transform:translateY(7px);opacity:1}}
+
+@media (max-width:640px){
+  .win-body{padding:24px 22px 32px;font-size:16px}
+  .meta{grid-template-columns:1fr}
+  #icons{display:none}
+  .mb-item.hideable{display:none}
+  #dock{gap:4px;padding:5px 7px;height:62px}
+  .dock-item{width:44px;height:44px}
+}
+</style>
+</head>
+<body>
+
+<!-- ===================== SVG ICON SPRITE ===================== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+<defs>
+  <linearGradient id="g-finder" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3aa9ff"/><stop offset="1" stop-color="#1574db"/></linearGradient>
+  <linearGradient id="g-term" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#454b54"/><stop offset="1" stop-color="#161a20"/></linearGradient>
+  <linearGradient id="g-folder" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5ab2f6"/><stop offset="1" stop-color="#2f8ce0"/></linearGradient>
+  <linearGradient id="g-mail" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4db8ff"/><stop offset="1" stop-color="#0a6fe0"/></linearGradient>
+  <linearGradient id="g-safari" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eef5fc"/><stop offset="1" stop-color="#c2d6ea"/></linearGradient>
+  <linearGradient id="g-set" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#929ba8"/><stop offset="1" stop-color="#525b67"/></linearGradient>
+  <linearGradient id="g-pine" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3c14a"/><stop offset="1" stop-color="#d98f28"/></linearGradient>
+
+  <!-- Finder -->
+  <symbol id="ic-finder" viewBox="0 0 512 512">
+    <path d="M256 0C66.1 0 0 66.1 0 256s66.1 256 256 256 256-66.1 256-256S445.9 0 256 0Z" fill="url(#g-finder)"/>
+    <clipPath id="cp-finder"><path d="M256 0C66.1 0 0 66.1 0 256s66.1 256 256 256 256-66.1 256-256S445.9 0 256 0Z"/></clipPath>
+    <rect clip-path="url(#cp-finder)" x="0" y="0" width="256" height="512" fill="#0f5fb8" opacity=".5"/>
+    <g fill="#0b2a4a"><rect x="178" y="150" width="22" height="84" rx="11"/><rect x="312" y="150" width="22" height="84" rx="11"/></g>
+    <path d="M166 300 Q256 374 346 300" stroke="#0b2a4a" stroke-width="20" fill="none" stroke-linecap="round"/>
+  </symbol>
+
+  <!-- Terminal -->
+  <symbol id="ic-terminal" viewBox="0 0 512 512">
+    <path d="M256 0C66.1 0 0 66.1 0 256s66.1 256 256 256 256-66.1 256-256S445.9 0 256 0Z" fill="url(#g-term)"/>
+    <clipPath id="cp-term"><path d="M256 0C66.1 0 0 66.1 0 256s66.1 256 256 256 256-66.1 256-256S445.9 0 256 0Z"/></clipPath>
+    <rect clip-path="url(#cp-term)" x="0" y="0" width="512" height="86" fill="#fff" opacity=".07"/>
+    <path d="M150 176 L206 231 L150 286" stroke="#eafff2" stroke-width="26" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="224" y="262" width="116" height="24" rx="12" fill="#eafff2"/>
+  </symbol>
+
+  <!-- Folder -->
+  <symbol id="ic-folder" viewBox="0 0 512 512">
+    <path d="M70 196q0-34 34-34h92l40 40h172q34 0 34 34v8H70Z" fill="#2f7ec9"/>
+    <path d="M70 214q0-30 30-30h312q30 0 30 30v140q0 30-30 30H100q-30 0-30-30Z" fill="url(#g-folder)"/>
+  </symbol>
+
+  <!-- Mail -->
+  <symbol id="ic-mail" viewBox="0 0 512 512">
+    <path d="M256 0C66.1 0 0 66.1 0 256s66.1 256 256 256 256-66.1 256-256S445.9 0 256 0Z" fill="url(#g-mail)"/>
+    <rect x="96" y="158" width="320" height="196" rx="32" fill="#fff"/>
+    <path d="M112 184 L256 290 L400 184" fill="none" stroke="#1c7fe0" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- Safari -->
+  <symbol id="ic-safari" viewBox="0 0 512 512">
+    <path d="M256 0C66.1 0 0 66.1 0 256s66.1 256 256 256 256-66.1 256-256S445.9 0 256 0Z" fill="url(#g-safari)"/>
+    <circle cx="256" cy="256" r="176" fill="#f3f7fb"/>
+    <circle cx="256" cy="256" r="176" fill="none" stroke="#cdd8e4" stroke-width="6"/>
+    <circle cx="256" cy="256" r="150" fill="#2f8fe6"/>
+    <g transform="rotate(42 256 256)">
+      <path d="M256 124 L292 256 L256 256 Z" fill="#ff4b3e"/>
+      <path d="M256 124 L220 256 L256 256 Z" fill="#e23a2e"/>
+      <path d="M256 388 L220 256 L256 256 Z" fill="#f6fafe"/>
+      <path d="M256 388 L292 256 L256 256 Z" fill="#dde6ef"/>
+    </g>
+    <circle cx="256" cy="256" r="11" fill="#fff"/>
+  </symbol>
+
+  <!-- Notes -->
+  <symbol id="ic-notes" viewBox="0 0 512 512">
+    <path d="M256 0C66.1 0 0 66.1 0 256s66.1 256 256 256 256-66.1 256-256S445.9 0 256 0Z" fill="#fdfdfb"/>
+    <clipPath id="cp-notes"><path d="M256 0C66.1 0 0 66.1 0 256s66.1 256 256 256 256-66.1 256-256S445.9 0 256 0Z"/></clipPath>
+    <g clip-path="url(#cp-notes)"><rect x="0" y="0" width="512" height="128" fill="#ffd45e"/><rect x="0" y="120" width="512" height="6" fill="#e7bc4d"/></g>
+    <g fill="#d8d4c9"><rect x="122" y="200" width="268" height="20" rx="10"/><rect x="122" y="250" width="268" height="20" rx="10"/><rect x="122" y="300" width="176" height="20" rx="10"/></g>
+  </symbol>
+
+  <!-- System Settings (gear) -->
+  <symbol id="ic-settings" viewBox="0 0 512 512">
+    <path d="M256 0C66.1 0 0 66.1 0 256s66.1 256 256 256 256-66.1 256-256S445.9 0 256 0Z" fill="url(#g-set)"/>
+    <g fill="#eef2f7">
+      <rect x="96" y="224" width="320" height="64" rx="30"/>
+      <rect x="224" y="96" width="64" height="320" rx="30"/>
+      <g transform="rotate(45 256 256)"><rect x="96" y="224" width="320" height="64" rx="30"/><rect x="224" y="96" width="64" height="320" rx="30"/></g>
+      <circle cx="256" cy="256" r="118"/>
+    </g>
+    <circle cx="256" cy="256" r="54" fill="url(#g-set)"/>
+  </symbol>
+
+  <!-- Pear (iCarly's Apple parody) -->
+  <symbol id="ic-pear" viewBox="0 0 512 512">
+    <defs>
+      <linearGradient id="g-pear" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbfbfa"/><stop offset="1" stop-color="#cfd0cd"/></linearGradient>
+      <mask id="m-pear">
+        <rect width="512" height="512" fill="#000"/>
+        <path d="M256 168 C214 168 196 206 196 246 C196 282 174 300 158 332 C140 368 132 400 132 430 C132 478 184 502 256 502 C328 502 380 478 380 430 C380 400 372 368 354 332 C338 300 316 282 316 246 C316 206 298 168 256 168 Z" fill="#fff"/>
+        <circle cx="372" cy="232" r="58" fill="#000"/>
+      </mask>
+    </defs>
+    <!-- leaf -->
+    <path d="M268 158 C306 104 366 100 402 120 C364 162 308 172 268 158 Z" fill="#7ac043"/>
+    <path d="M276 152 C312 124 356 122 392 130" stroke="#5a9a32" stroke-width="7" fill="none" stroke-linecap="round" opacity=".7"/>
+    <!-- stem -->
+    <path d="M252 172 C246 138 250 116 272 104" stroke="#7a5a36" stroke-width="15" fill="none" stroke-linecap="round"/>
+    <!-- body with bite -->
+    <path d="M256 168 C214 168 196 206 196 246 C196 282 174 300 158 332 C140 368 132 400 132 430 C132 478 184 502 256 502 C328 502 380 478 380 430 C380 400 372 368 354 332 C338 300 316 282 316 246 C316 206 298 168 256 168 Z" fill="url(#g-pear)" mask="url(#m-pear)"/>
+  </symbol>
+</defs>
+</svg>
+
+<!-- ===================== CUSTOM CURSOR ===================== -->
+<div id="ring"></div>
+<svg id="cursor" viewBox="0 0 22 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M2 2 L2 21 L7 16.5 L10.5 24 L13.5 22.7 L10 15.2 L17 15 Z" fill="#1a1714" stroke="#fbf8f1" stroke-width="1.4" stroke-linejoin="round"/>
+</svg>
+
+<!-- ===================== BOOT ===================== -->
+<div id="boot">
+  <svg class="pine" viewBox="0 0 512 512"><use href="#ic-pear"/></svg>
+  <div class="boot-bar"><i></i></div>
+</div>
+
+<!-- ===================== DESKTOP / WALLPAPER ===================== -->
+<div id="desk">
+  <div class="wall-base"></div>
+  <div id="wallpaper-img"></div>
+  <div class="bs-sun"></div>
+  <div class="layer bs-stars" id="stars" data-depth="6"></div>
+  <div class="bs-haze"></div>
+  <div class="layer ridge r-far" data-depth="14">
+    <svg viewBox="0 0 1440 500" preserveAspectRatio="none"><path fill="#7ba2bd" d="M0 300 C240 250 420 282 640 250 C880 214 1080 272 1440 236 L1440 500 L0 500 Z"/></svg>
+  </div>
+  <div class="layer ridge r-mid" data-depth="27">
+    <svg viewBox="0 0 1440 500" preserveAspectRatio="none"><path fill="#3f6c92" d="M0 352 C260 300 520 352 760 316 C1020 280 1240 332 1440 300 L1440 500 L0 500 Z"/></svg>
+  </div>
+  <div class="layer ridge r-near" data-depth="46">
+    <svg viewBox="0 0 1440 500" preserveAspectRatio="none"><path fill="#172f4a" d="M0 424 C260 404 480 418 720 388 C980 356 1180 300 1440 220 L1440 500 L0 500 Z"/></svg>
+  </div>
+</div>
+<div id="grain"></div>
+<div id="vign"></div>
+
+<!-- ===================== WELCOME HINT ===================== -->
+<div id="hint">
+  <div class="big">Hello, <em>Lukas.</em></div>
+  <div class="tag">click the dock to wander ↓</div>
+</div>
+
+<!-- ===================== MENU BAR ===================== -->
+<div id="menubar">
+  <div class="mb-pine" data-menu="pine"><svg viewBox="0 0 512 512"><use href="#ic-pear"/></svg></div>
+  <div class="mb-item brand" data-menu="brand">Lukas Estifanos</div>
+  <div class="mb-item hideable" data-open="about">About</div>
+  <div class="mb-item hideable" data-open="work">Work</div>
+  <div class="mb-item hideable" data-open="projects">Projects</div>
+  <div class="mb-item hideable" data-open="skills">Skills</div>
+  <div class="mb-spring"></div>
+  <div class="mb-right">
+    <!-- battery -->
+    <svg width="26" height="14" viewBox="0 0 26 14" fill="none"><rect x="1" y="2.5" width="20" height="9" rx="2.6" stroke="#fff" stroke-opacity=".9" stroke-width="1.2"/><rect x="2.6" y="4.1" width="13" height="5.8" rx="1.2" fill="#fff"/><rect x="22.4" y="5" width="1.8" height="4" rx="1" fill="#fff" fill-opacity=".9"/></svg>
+    <!-- wifi -->
+    <svg width="18" height="14" viewBox="0 0 18 14" fill="#fff"><path d="M9 13.2a1.5 1.5 0 100-3 1.5 1.5 0 000 3Z"/><path d="M9 4.2c2.4 0 4.6.9 6.3 2.5l1.4-1.5A11 11 0 009 2 11 11 0 001.3 5.2l1.4 1.5A8.6 8.6 0 019 4.2Z" opacity=".95"/><path d="M9 7.6c1.5 0 2.9.6 3.9 1.6l1.4-1.5A8 8 0 009 5.4 8 8 0 003.7 7.7l1.4 1.5A5.5 5.5 0 019 7.6Z"/></svg>
+    <!-- spotlight -->
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="#fff" stroke-width="1.5"/><path d="M11 11l3.5 3.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg>
+    <!-- control center -->
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="2.5" width="13" height="4.4" rx="2.2" stroke="#fff" stroke-width="1.2"/><circle cx="5" cy="4.7" r="1.4" fill="#fff"/><rect x="1.5" y="9.1" width="13" height="4.4" rx="2.2" stroke="#fff" stroke-width="1.2"/><circle cx="11" cy="11.3" r="1.4" fill="#fff"/></svg>
+    <span class="mb-item" data-open="contact" style="font-style:italic">Hire me</span>
+    <span class="mb-clock" id="clock">—</span>
+  </div>
+</div>
+
+<!-- dropdowns -->
+<div class="menu-pop" id="pop-pine" style="left:6px">
+  <div class="row" data-open="about"><span>About this Lukas</span><span></span></div>
+  <div class="sep"></div>
+  <div class="row" data-open="projects"><span>Recent Work</span><span>⌘R</span></div>
+  <div class="row" data-open="term"><span>Terminal…</span><span>⌘T</span></div>
+  <div class="sep"></div>
+  <div class="row muted"><span>Available — Summer 2027</span><span>●</span></div>
+</div>
+<div class="menu-pop" id="pop-brand" style="left:40px">
+  <div class="row" data-open="about"><span>Who is this</span><span>⌘A</span></div>
+  <div class="row" data-open="work"><span>Experience</span><span>⌘W</span></div>
+  <div class="row" data-open="projects"><span>Projects</span><span>⌘P</span></div>
+  <div class="row" data-open="skills"><span>Skills</span><span>⌘S</span></div>
+  <div class="sep"></div>
+  <div class="row" data-open="contact"><span>Get in touch</span><span>⌘K</span></div>
+</div>
+
+<!-- ===================== DESKTOP ICONS ===================== -->
+<div id="icons">
+  <div class="dicon" data-open="about" style="animation-delay:2.3s"><div class="gl"><svg viewBox="0 0 512 512"><use href="#ic-finder"/></svg></div><span>Read Me</span></div>
+  <div class="dicon" data-open="projects" style="animation-delay:2.45s"><div class="gl"><svg viewBox="0 0 512 512"><use href="#ic-folder"/></svg></div><span>Projects</span></div>
+  <div class="dicon" data-open="term" style="animation-delay:2.6s"><div class="gl"><svg viewBox="0 0 512 512"><use href="#ic-terminal"/></svg></div><span>Terminal</span></div>
+</div>
+
+<!-- ===================== WINDOWS ===================== -->
+
+<!-- ABOUT -->
+<div class="win" id="win-about" style="top:14%;left:9%">
+  <div class="titlebar">
+    <div class="lights"><i class="light red" data-act="close"></i><i class="light yel" data-act="min"></i><i class="light grn" data-act="zoom"></i></div>
+    <div class="win-title">Read Me <small>— about.rtf</small></div><div class="spacer"></div>
+  </div>
+  <div class="win-body">
+    <div class="kicker">Software Engineer · Cincinnati, OH</div>
+    <h1 class="display">Lukas<br><em>Estifanos.</em></h1>
+    <p class="lede">I build full-stack distributed systems — the kind where a web client, a mobile client and a single Postgres brain all have to agree. Lately: <em>multi-agent automation pipelines</em> moving 10,000+ tasks a month. I like owning the whole stack, from the schema decision down to the systemd unit that never falls over.</p>
+    <div class="rule"></div>
+    <div class="meta">
+      <div class="cell"><div class="lbl">Currently</div><div class="val">Forward Deployed Software Engineer<br><span class="muted">Triptych / Flowstage</span></div></div>
+      <div class="cell"><div class="lbl">Studying</div><div class="val">B.S. Information Technology<br><span class="muted">University of Cincinnati · Software Dev Track</span></div></div>
+      <div class="cell"><div class="lbl">Graduating</div><div class="val">May 2028 · <span class="muted">GPA 3.45 / 4.0</span></div></div>
+      <div class="cell"><div class="lbl">Open to</div><div class="val">Internship — <em>Summer 2027</em></div></div>
+      <div class="cell"><div class="lbl">Email</div><div class="val"><a href="mailto:lukasestifanos23@gmail.com">lukasestifanos23@gmail.com</a></div></div>
+      <div class="cell"><div class="lbl">GitHub</div><div class="val"><a href="https://github.com/lukaspestifanos" target="_blank" rel="noopener">@lukaspestifanos</a></div></div>
+    </div>
+    <div class="aqua-row">
+      <a class="aqua gold" href="mailto:lukasestifanos23@gmail.com">✉ Say hello</a>
+      <a class="aqua" href="https://github.com/lukaspestifanos" target="_blank" rel="noopener">↗ GitHub</a>
+    </div>
+  </div>
+</div>
+
+<!-- WORK -->
+<div class="win" id="win-work" style="top:12%;left:16%">
+  <div class="titlebar">
+    <div class="lights"><i class="light red" data-act="close"></i><i class="light yel" data-act="min"></i><i class="light grn" data-act="zoom"></i></div>
+    <div class="win-title">Experience <small>— work.md</small></div><div class="spacer"></div>
+  </div>
+  <div class="win-body">
+    <div class="kicker">Where I've shipped</div>
+    <h2 class="display" style="font-size:clamp(32px,4.6vw,52px)">A short<br>working <em>history.</em></h2>
+    <div class="rule"></div>
+    <div class="job">
+      <div class="when">APR 2026 — PRESENT</div>
+      <div class="h2">Triptych / Flowstage</div>
+      <div class="role">Forward Deployed Software Engineer</div>
+      <ul>
+        <li>Built TypeScript multi-agent automation pipelines processing <strong>10,000+ content-generation tasks monthly</strong> across 100+ client accounts — integrating the Claude API with a Supabase / PostgreSQL backend.</li>
+        <li>Cut production incident resolution time by <strong>40%</strong> by owning all DevOps, database optimization, and full-stack debugging across distributed TS/Postgres infrastructure.</li>
+        <li>Drove end-to-end delivery of <strong>4 production workstreams</strong> on a 14-week roadmap — technical design, schema decisions, and perf work — with engineering leadership and 10+ enterprise clients.</li>
+        <li>Designed multi-tenant architecture for variable load across hundreds of concurrent accounts; established monitoring patterns and operational runbooks.</li>
+      </ul>
+    </div>
+    <div class="job">
+      <div class="when">FEB 2025 — PRESENT</div>
+      <div class="h2">Off Record Sounds</div>
+      <div class="role">Operations Coordinator &amp; Partnerships</div>
+      <ul>
+        <li>Built and maintained a Python service for production data monitoring — runs continuously under daily load with <strong>zero manual intervention</strong> and a 60+ second performance advantage over competing systems.</li>
+        <li>Engineered a scalable data-ingestion and publishing pipeline showcasing systems-level optimization and reliable production operation.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<div class="win" id="win-projects" style="top:16%;left:22%">
+  <div class="titlebar">
+    <div class="lights"><i class="light red" data-act="close"></i><i class="light yel" data-act="min"></i><i class="light grn" data-act="zoom"></i></div>
+    <div class="win-title">Projects <small>— ~/work</small></div><div class="spacer"></div>
+  </div>
+  <div class="win-body">
+    <div class="kicker">Built solo, end to end</div>
+    <h2 class="display" style="font-size:clamp(32px,4.6vw,52px)">Things I<br><em>made.</em></h2>
+    <div class="rule"></div>
+    <a class="proj" href="https://tails-mvp-edition.vercel.app" target="_blank" rel="noopener">
+      <div class="top"><h3>Tails</h3><span class="link">tails-mvp-edition.vercel.app ↗</span></div>
+      <p>A full-stack distributed system with multi-client architecture. Solo-built, separated <strong>web (Next.js / Vercel)</strong> and <strong>mobile (React Native / Expo)</strong> clients sharing a single Supabase / PostgreSQL backend. Reached <strong>50+ active users</strong> and App Store approval — a study in API contracts, database normalization, and cross-platform data consistency.</p>
+      <span class="arrow">→</span>
+    </a>
+    <a class="proj" href="https://github.com/lukaspestifanos" target="_blank" rel="noopener">
+      <div class="top"><h3>What's The Move</h3><span class="link">github ↗</span></div>
+      <p>A full-stack event-discovery app integrating the <strong>Ticketmaster</strong> and <strong>Meetup</strong> REST APIs with a stateful backend — session management, authentication, and search filtering all working in concert.</p>
+      <span class="arrow">→</span>
+    </a>
+  </div>
+</div>
+
+<!-- SKILLS -->
+<div class="win" id="win-skills" style="top:18%;left:28%">
+  <div class="titlebar">
+    <div class="lights"><i class="light red" data-act="close"></i><i class="light yel" data-act="min"></i><i class="light grn" data-act="zoom"></i></div>
+    <div class="win-title">Skills <small>— toolkit.cfg</small></div><div class="spacer"></div>
+  </div>
+  <div class="win-body">
+    <div class="kicker">What I reach for</div>
+    <h2 class="display" style="font-size:clamp(32px,4.6vw,52px)">The <em>toolkit.</em></h2>
+    <div class="skill-cat">Languages</div>
+    <div class="chips"><span class="chip">JavaScript</span><span class="chip">TypeScript</span><span class="chip">Python</span><span class="chip">SQL</span><span class="chip">HTML</span><span class="chip">CSS</span></div>
+    <div class="skill-cat">Frontend</div>
+    <div class="chips"><span class="chip">React</span><span class="chip">Tailwind CSS</span></div>
+    <div class="skill-cat">Backend &amp; Data</div>
+    <div class="chips"><span class="chip">Node.js</span><span class="chip">Express.js</span><span class="chip">RESTful APIs</span><span class="chip">PostgreSQL</span></div>
+    <div class="skill-cat">Infra · Linux · DevOps</div>
+    <div class="chips"><span class="chip">Linux (Ubuntu)</span><span class="chip">AlmaLinux</span><span class="chip">Windows Server</span><span class="chip">systemd</span><span class="chip">Apache</span><span class="chip">Samba</span><span class="chip">Firewall config</span><span class="chip">Deployment automation</span></div>
+    <div class="skill-cat">Version Control &amp; Practice</div>
+    <div class="chips"><span class="chip">Git</span><span class="chip">GitHub</span><span class="chip">AI-assisted development</span></div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="win" id="win-contact" style="top:20%;left:30%;width:min(560px,92vw)">
+  <div class="titlebar">
+    <div class="lights"><i class="light red" data-act="close"></i><i class="light yel" data-act="min"></i><i class="light grn" data-act="zoom"></i></div>
+    <div class="win-title">Get in touch <small>— hire.me</small></div><div class="spacer"></div>
+  </div>
+  <div class="win-body">
+    <div class="kicker">Available — Internship · Summer 2027</div>
+    <h2 class="display" style="font-size:clamp(34px,5vw,58px)">Let's build<br><em>something.</em></h2>
+    <p class="lede">Got an internship, a hard systems problem, or just want to talk shop? My inbox is open.</p>
+    <div class="rule"></div>
+    <div class="meta">
+      <div class="cell"><div class="lbl">Email</div><div class="val"><a href="mailto:lukasestifanos23@gmail.com">lukasestifanos23@gmail.com</a></div></div>
+      <div class="cell"><div class="lbl">Phone</div><div class="val"><a href="tel:6144325017">614-432-5017</a></div></div>
+      <div class="cell"><div class="lbl">GitHub</div><div class="val"><a href="https://github.com/lukaspestifanos" target="_blank" rel="noopener">github.com/lukaspestifanos</a></div></div>
+      <div class="cell"><div class="lbl">Based in</div><div class="val">Cincinnati, Ohio</div></div>
+    </div>
+    <div class="aqua-row">
+      <a class="aqua gold" href="mailto:lukasestifanos23@gmail.com">✉ Email me</a>
+      <a class="aqua" href="tel:6144325017">☎ Call</a>
+      <a class="aqua" href="https://github.com/lukaspestifanos" target="_blank" rel="noopener">↗ GitHub</a>
+    </div>
+  </div>
+</div>
+
+<!-- TERMINAL -->
+<div class="win term" id="win-term" style="top:22%;left:34%;width:min(640px,92vw)">
+  <div class="titlebar">
+    <div class="lights"><i class="light red" data-act="close"></i><i class="light yel" data-act="min"></i><i class="light grn" data-act="zoom"></i></div>
+    <div class="win-title">Terminal <small>— lukas@os: ~</small></div><div class="spacer"></div>
+  </div>
+  <div class="win-body"><div class="term-screen" id="termScreen"></div></div>
+</div>
+
+<!-- ===================== DOCK ===================== -->
+<div id="dock-wrap">
+  <div id="dock">
+    <div class="dock-item" data-open="about"   data-label="About"><svg class="ic" viewBox="0 0 512 512"><use href="#ic-finder"/></svg><i class="dot"></i></div>
+    <div class="dock-item" data-open="work"     data-label="Experience"><svg class="ic" viewBox="0 0 512 512"><use href="#ic-notes"/></svg><i class="dot"></i></div>
+    <div class="dock-item" data-open="projects" data-label="Projects"><svg class="ic" viewBox="0 0 512 512"><use href="#ic-folder"/></svg><i class="dot"></i></div>
+    <div class="dock-item" data-open="skills"   data-label="Skills"><svg class="ic" viewBox="0 0 512 512"><use href="#ic-settings"/></svg><i class="dot"></i></div>
+    <div class="dock-sep"></div>
+    <div class="dock-item" data-open="term"     data-label="Terminal"><svg class="ic" viewBox="0 0 512 512"><use href="#ic-terminal"/></svg><i class="dot"></i></div>
+    <div class="dock-item" data-open="contact"  data-label="Hire me"><svg class="ic" viewBox="0 0 512 512"><use href="#ic-mail"/></svg><i class="dot"></i></div>
+    <div class="dock-sep"></div>
+    <div class="dock-item" data-href="https://github.com/lukaspestifanos" data-label="GitHub"><svg class="ic" viewBox="0 0 512 512"><use href="#ic-safari"/></svg></div>
+  </div>
+</div>
+
+<script>
+/* 0. STARFIELD + optional real wallpaper image */
+(function(){
+  let h='';for(let i=0;i<60;i++){
+    const x=(Math.random()*100).toFixed(2),y=(Math.random()*46).toFixed(2),
+          d=(Math.random()*3.5).toFixed(2),s=(Math.random()*1.4+.6).toFixed(2);
+    h+=`<i style="left:${x}%;top:${y}%;width:${s}px;height:${s}px;animation-delay:${d}s"></i>`;
+  }
+  document.getElementById('stars').innerHTML=h;
+  // if assets/wallpaper.jpg exists, fade it over the CSS gradient for a pixel-exact Big Sur
+  const img=new Image();
+  img.onload=()=>{const el=document.getElementById('wallpaper-img');
+    el.style.backgroundImage=`url("assets/wallpaper.jpg")`;el.style.opacity=1;};
+  img.src='assets/wallpaper.jpg';
+})();
+
+/* 1. BOOT → DESKTOP */
+window.addEventListener('load',()=>{
+  setTimeout(()=>document.getElementById('boot').classList.add('done'),100);
+  setTimeout(()=>{
+    document.getElementById('desk').classList.add('on');
+    document.getElementById('menubar').classList.add('on');
+    document.getElementById('dock-wrap').classList.add('on');
+    document.getElementById('hint').classList.add('on');
+  },120);
+});
+
+/* 2. CUSTOM CURSOR */
+const cur=document.getElementById('cursor'),ring=document.getElementById('ring');
+let mx=innerWidth/2,my=innerHeight/2,rx=mx,ry=my;
+addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;
+  cur.style.transform=`translate(${mx-2}px,${my-1}px)`;ring.classList.add('show');});
+addEventListener('mousedown',()=>cur.classList.add('click'));
+addEventListener('mouseup',()=>cur.classList.remove('click'));
+addEventListener('mouseleave',()=>{ring.classList.remove('show');cur.style.opacity=0});
+addEventListener('mouseenter',()=>cur.style.opacity=1);
+(function loop(){rx+=(mx-rx)*.18;ry+=(my-ry)*.18;ring.style.transform=`translate(${rx}px,${ry}px)`;requestAnimationFrame(loop);})();
+const HOT='a,.dock-item,.dicon,.mb-item,.mb-pine,.light,.proj,.chip,.aqua,.menu-pop .row';
+document.addEventListener('mouseover',e=>{if(e.target.closest(HOT)){ring.classList.add('big');}});
+document.addEventListener('mouseout',e=>{if(e.target.closest(HOT)){ring.classList.remove('big');}});
+
+/* 3. PARALLAX */
+const layers=[...document.querySelectorAll('.layer')];
+let tx=0,ty=0,cxp=0,cyp=0;
+addEventListener('mousemove',e=>{tx=(e.clientX/innerWidth-.5);ty=(e.clientY/innerHeight-.5);});
+(function para(){cxp+=(tx-cxp)*.05;cyp+=(ty-cyp)*.05;
+  for(const l of layers){const d=parseFloat(l.dataset.depth)||10;
+    l.style.transform=`translate(${-cxp*d}px,${-cyp*d*.6}px)`;}
+  requestAnimationFrame(para);})();
+
+/* 4. LIVE CLOCK */
+const clk=document.getElementById('clock');
+function tick(){const n=new Date();
+  const days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const mons=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  let h=n.getHours(),m=n.getMinutes().toString().padStart(2,'0');
+  const ap=h<12?'AM':'PM';h=h%12||12;
+  clk.textContent=`${days[n.getDay()]} ${mons[n.getMonth()]} ${n.getDate()}  ${h}:${m} ${ap}`;}
+tick();setInterval(tick,1000);
+
+/* 5. WINDOW MANAGER */
+let z=100;
+function openWin(id){const w=document.getElementById('win-'+id);if(!w)return;
+  document.getElementById('hint').style.opacity=0;
+  w.classList.remove('closing','min');w.classList.add('open');w.style.zIndex=++z;
+  document.querySelectorAll(`.dock-item[data-open="${id}"]`).forEach(d=>d.classList.add('run'));
+  if(id==='term')runTerminal();}
+function closeWin(w){w.classList.add('closing');setTimeout(()=>w.classList.remove('open','closing'),240);
+  const id=w.id.replace('win-','');document.querySelectorAll(`.dock-item[data-open="${id}"]`).forEach(d=>d.classList.remove('run'));}
+function minWin(w){w.classList.add('min');setTimeout(()=>w.classList.remove('open','min'),360);}
+function zoomWin(w){if(w._zoom){Object.assign(w.style,w._zoom);w._zoom=null;return;}
+  w._zoom={top:w.style.top,left:w.style.left,width:w.style.width,transform:w.style.transform};
+  Object.assign(w.style,{top:'36px',left:'2.5vw',width:'95vw',transform:'none'});}
+document.querySelectorAll('[data-open]').forEach(el=>el.addEventListener('click',()=>{closeMenus();openWin(el.dataset.open);}));
+document.querySelectorAll('[data-href]').forEach(el=>el.addEventListener('click',()=>window.open(el.dataset.href,'_blank','noopener')));
+document.querySelectorAll('.win').forEach(w=>{
+  w.addEventListener('mousedown',()=>{w.style.zIndex=++z;});
+  w.querySelectorAll('.light').forEach(l=>l.addEventListener('click',ev=>{ev.stopPropagation();
+    const a=l.dataset.act;if(a==='close')closeWin(w);else if(a==='min')minWin(w);else if(a==='zoom')zoomWin(w);}));
+});
+/* dragging */
+document.querySelectorAll('.titlebar').forEach(tb=>{
+  let sx,sy,ox,oy,drag=false;const w=tb.closest('.win');
+  tb.addEventListener('mousedown',e=>{if(e.target.closest('.light'))return;
+    drag=true;w.style.zIndex=++z;const r=w.getBoundingClientRect();
+    ox=r.left;oy=r.top;sx=e.clientX;sy=e.clientY;
+    w.style.transform='none';w.style.left=ox+'px';w.style.top=oy+'px';w.style.right='auto';
+    document.body.style.userSelect='none';});
+  addEventListener('mousemove',e=>{if(!drag)return;
+    w.style.left=(ox+(e.clientX-sx))+'px';w.style.top=Math.max(30,oy+(e.clientY-sy))+'px';});
+  addEventListener('mouseup',()=>{drag=false;document.body.style.userSelect='';});
+});
+
+/* 6. MENU BAR DROPDOWNS */
+function closeMenus(){document.querySelectorAll('.menu-pop').forEach(p=>p.classList.remove('open'));}
+document.querySelectorAll('[data-menu]').forEach(mi=>mi.addEventListener('click',e=>{e.stopPropagation();
+  const pop=document.getElementById('pop-'+mi.dataset.menu);const was=pop.classList.contains('open');
+  closeMenus();if(!was)pop.classList.add('open');}));
+document.addEventListener('click',closeMenus);
+document.querySelectorAll('.menu-pop .row[data-open]').forEach(r=>r.addEventListener('click',()=>{closeMenus();openWin(r.dataset.open);}));
+addEventListener('keydown',e=>{if(!(e.metaKey||e.ctrlKey))return;
+  const map={a:'about',w:'work',p:'projects',s:'skills',k:'contact',t:'term',r:'projects'};
+  const k=e.key.toLowerCase();if(map[k]){e.preventDefault();openWin(map[k]);}});
+
+/* 7. DOCK MAGNIFICATION */
+const dock=document.getElementById('dock');
+const items=[...dock.querySelectorAll('.dock-item')];
+dock.addEventListener('mousemove',e=>{items.forEach(it=>{
+  const r=it.getBoundingClientRect(),c=r.left+r.width/2,dist=Math.abs(e.clientX-c);
+  const scale=Math.max(1,1.6-dist/170);
+  it.style.transform=`scale(${scale}) translateY(${-(scale-1)*18}px)`;
+  it.style.margin=`0 ${(scale-1)*7}px`;});});
+dock.addEventListener('mouseleave',()=>items.forEach(it=>{it.style.transform='';it.style.margin='';}));
+
+/* 8. TERMINAL TYPE-OUT */
+let termRan=false;
+function runTerminal(){if(termRan)return;termRan=true;
+  const el=document.getElementById('termScreen');
+  const lines=[
+    `<span class="pr">lukas@os</span>:<span class="c">~</span>$ whoami`,
+    `<span class="us">Lukas Estifanos</span> — Forward Deployed Software Engineer`,``,
+    `<span class="pr">lukas@os</span>:<span class="c">~</span>$ neofetch`,
+    `<span class="k">      .--.       </span> <span class="us">lukas</span>@<span class="us">os</span>`,
+    `<span class="k">     |o_o |      </span> <span class="dim">-----------</span>`,
+    `<span class="k">     |:_/ |      </span> <span class="c">OS</span>:    Lukas//OS  (Ubuntu · AlmaLinux)`,
+    `<span class="k">    //   \\ \\     </span> <span class="c">Role</span>:  FDE @ Triptych / Flowstage`,
+    `<span class="k">   (|     | )    </span> <span class="c">Edu</span>:   B.S. IT — Univ. of Cincinnati '28`,
+    `<span class="k">  /'\\_   _/\`\\    </span> <span class="c">Stack</span>: TypeScript · Python · Postgres`,
+    `<span class="k">  \\___)=(___/    </span> <span class="c">Infra</span>: systemd · Apache · Samba · firewall`,
+    `<span class="k">                 </span> <span class="c">Uptime</span>: shipping since 2025`,``,
+    `<span class="pr">lukas@os</span>:<span class="c">~</span>$ cat status.txt`,
+    `<span class="us">▸ Available for an internship — Summer 2027.</span>`,
+    `<span class="pr">lukas@os</span>:<span class="c">~</span>$ <span class="cursorblink"></span>`
+  ];
+  let i=0;(function next(){if(i>=lines.length)return;
+    const div=document.createElement('div');div.innerHTML=lines[i]||'&nbsp;';el.appendChild(div);
+    el.parentElement.scrollTop=el.parentElement.scrollHeight;i++;
+    setTimeout(next,lines[i-1]===''?90:150);})();}
+
+/* warm landing: open About a moment after boot */
+setTimeout(()=>{if(z===100)openWin('about');},4200);
+</script>
+</body>
+</html>

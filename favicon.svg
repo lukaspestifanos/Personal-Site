@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="g-pear" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fbfbfa"/><stop offset="1" stop-color="#cfd0cd"/>
+    </linearGradient>
+    <mask id="m-pear">
+      <rect width="512" height="512" fill="#000"/>
+      <path d="M256 168 C214 168 196 206 196 246 C196 282 174 300 158 332 C140 368 132 400 132 430 C132 478 184 502 256 502 C328 502 380 478 380 430 C380 400 372 368 354 332 C338 300 316 282 316 246 C316 206 298 168 256 168 Z" fill="#fff"/>
+      <circle cx="372" cy="232" r="58" fill="#000"/>
+    </mask>
+  </defs>
+  <path d="M268 158 C306 104 366 100 402 120 C364 162 308 172 268 158 Z" fill="#7ac043"/>
+  <path d="M276 152 C312 124 356 122 392 130" stroke="#5a9a32" stroke-width="7" fill="none" stroke-linecap="round" opacity=".7"/>
+  <path d="M252 172 C246 138 250 116 272 104" stroke="#7a5a36" stroke-width="15" fill="none" stroke-linecap="round"/>
+  <path d="M256 168 C214 168 196 206 196 246 C196 282 174 300 158 332 C140 368 132 400 132 430 C132 478 184 502 256 502 C328 502 380 478 380 430 C380 400 372 368 354 332 C338 300 316 282 316 246 C316 206 298 168 256 168 Z" fill="url(#g-pear)" mask="url(#m-pear)"/>
+</svg>
