@@ -38,13 +38,16 @@ body{
   text-rendering:optimizeLegibility;
 }
 a{color:inherit}
-*{cursor:none !important}
+/* hide the native cursor only where a real pointer exists; touch keeps its default */
+@media (hover:hover) and (pointer:fine){*{cursor:none !important}}
 
 /* ===================== CUSTOM CURSOR (mac arrow) ===================== */
 #cursor{position:fixed;top:0;left:0;z-index:99999;pointer-events:none;width:22px;height:26px;
   transform:translate(-2px,-1px);transition:transform .08s var(--ease),opacity .2s;
   will-change:transform;filter:drop-shadow(1px 2px 1px rgba(0,0,0,.4))}
 #cursor.click{transform:translate(-2px,-1px) scale(.82)}
+/* no fake cursor on touch screens (it would freeze mid-screen) */
+@media (hover:none),(pointer:coarse){#cursor{display:none !important}}
 
 /* ===================== BOOT (black + pear + bar) ===================== */
 #boot{position:fixed;inset:0;z-index:9000;background:#000;
@@ -144,7 +147,7 @@ a{color:inherit}
 
 .titlebar{height:40px;display:flex;align-items:center;gap:10px;padding:0 13px;flex-shrink:0;
   background:linear-gradient(180deg,rgba(252,251,249,.9),rgba(238,236,231,.85));
-  border-bottom:1px solid var(--hair);cursor:grab !important;user-select:none}
+  border-bottom:1px solid var(--hair);cursor:grab !important;user-select:none;touch-action:none}
 .titlebar:active{cursor:grabbing !important}
 .lights{display:flex;gap:8px}
 .light{width:12px;height:12px;border-radius:50%;position:relative;
@@ -157,7 +160,8 @@ a{color:inherit}
 .win-title small{font-weight:400;opacity:.55}
 .titlebar .spacer{width:52px}
 
-.win-body{padding:34px 40px 42px;overflow-y:auto;line-height:1.6;font-size:17px}
+.win-body{padding:34px 40px 42px;overflow-y:auto;line-height:1.6;font-size:17px;
+  -webkit-overflow-scrolling:touch;overscroll-behavior:contain}
 .win-body::-webkit-scrollbar{width:13px}
 .win-body::-webkit-scrollbar-track{background:transparent}
 .win-body::-webkit-scrollbar-thumb{border:3px solid transparent;border-radius:10px;
@@ -246,12 +250,21 @@ a{color:inherit}
 @keyframes bob{0%,100%{transform:translateY(0);opacity:.7}50%{transform:translateY(7px);opacity:1}}
 
 @media (max-width:640px){
+  /* windows fill the phone instead of sitting at desktop offsets (beats inline styles) */
+  .win{left:4vw !important;right:4vw;width:92vw !important;top:46px !important;
+    max-height:calc(100dvh - 92px);transform:none !important}
   .win-body{padding:24px 22px 32px;font-size:16px}
+  .display{font-size:clamp(38px,12vw,60px)}
   .meta{grid-template-columns:1fr}
   #icons{display:none}
   .mb-item.hideable{display:none}
-  #dock{gap:4px;padding:5px 7px;height:62px}
-  .dock-item{width:44px;height:44px}
+  .mb-right{gap:9px}
+  .mb-clock{min-width:0;font-size:12px}
+  #dock-wrap{bottom:6px}
+  #dock{gap:3px;padding:5px 6px;height:60px;border-radius:18px}
+  .dock-item{width:42px;height:42px}
+  .dock-sep{margin:0 2px}
+  #hint .tag{font-size:13px}
 }
 </style>
 </head>
@@ -612,6 +625,8 @@ a{color:inherit}
 })();
 
 /* 1. BOOT → DESKTOP */
+const isTouch=matchMedia('(hover:none),(pointer:coarse)').matches||'ontouchstart' in window;
+if(isTouch)document.querySelector('#hint .tag').textContent='tap the dock to wander ↓';
 window.addEventListener('load',()=>{
   setTimeout(()=>document.getElementById('boot').classList.add('done'),100);
   setTimeout(()=>{
@@ -641,6 +656,25 @@ addEventListener('mousemove',e=>{tx=(e.clientX/innerWidth-.5);ty=(e.clientY/inne
     l.style.transform=`translate(${-cxp*d}px,${-cyp*d*.6}px)`;}
   requestAnimationFrame(para);})();
 
+/* 3b. TILT PARALLAX — feed gyroscope into the same tx/ty on mobile */
+if(isTouch){
+  let baseB=null;
+  const onTilt=e=>{
+    if(e.gamma==null||e.beta==null)return;
+    if(baseB===null)baseB=e.beta;                       // calibrate to however it's being held
+    const g=Math.max(-1,Math.min(1,e.gamma/35));        // left/right tilt
+    const b=Math.max(-1,Math.min(1,(e.beta-baseB)/35)); // forward/back tilt
+    tx=g*.6;ty=b*.6;
+  };
+  const start=()=>addEventListener('deviceorientation',onTilt);
+  const DOE=window.DeviceOrientationEvent;
+  if(DOE&&typeof DOE.requestPermission==='function'){   // iOS 13+ needs a gesture to opt in
+    const ask=()=>{DOE.requestPermission().then(s=>{if(s==='granted')start();}).catch(()=>{});};
+    addEventListener('touchend',ask,{once:true});
+    addEventListener('click',ask,{once:true});
+  }else start();                                         // Android & others: just listen
+}
+
 /* 4. LIVE CLOCK */
 const clk=document.getElementById('clock');
 function tick(){const n=new Date();
@@ -667,21 +701,22 @@ function zoomWin(w){if(w._zoom){Object.assign(w.style,w._zoom);w._zoom=null;retu
 document.querySelectorAll('[data-open]').forEach(el=>el.addEventListener('click',()=>{closeMenus();openWin(el.dataset.open);}));
 document.querySelectorAll('[data-href]').forEach(el=>el.addEventListener('click',()=>window.open(el.dataset.href,'_blank','noopener')));
 document.querySelectorAll('.win').forEach(w=>{
-  w.addEventListener('mousedown',()=>{w.style.zIndex=++z;});
+  w.addEventListener('pointerdown',()=>{w.style.zIndex=++z;});
   w.querySelectorAll('.light').forEach(l=>l.addEventListener('click',ev=>{ev.stopPropagation();
     const a=l.dataset.act;if(a==='close')closeWin(w);else if(a==='min')minWin(w);else if(a==='zoom')zoomWin(w);}));
 });
-/* dragging */
+/* dragging (pointer events = mouse + touch + pen) */
 document.querySelectorAll('.titlebar').forEach(tb=>{
   let sx,sy,ox,oy,drag=false;const w=tb.closest('.win');
-  tb.addEventListener('mousedown',e=>{if(e.target.closest('.light'))return;
+  tb.addEventListener('pointerdown',e=>{if(e.target.closest('.light'))return;
     drag=true;w.style.zIndex=++z;const r=w.getBoundingClientRect();
     ox=r.left;oy=r.top;sx=e.clientX;sy=e.clientY;
     w.style.transform='none';w.style.left=ox+'px';w.style.top=oy+'px';w.style.right='auto';
-    document.body.style.userSelect='none';});
-  addEventListener('mousemove',e=>{if(!drag)return;
+    document.body.style.userSelect='none';try{tb.setPointerCapture(e.pointerId);}catch(_){}});
+  tb.addEventListener('pointermove',e=>{if(!drag)return;
     w.style.left=(ox+(e.clientX-sx))+'px';w.style.top=Math.max(30,oy+(e.clientY-sy))+'px';});
-  addEventListener('mouseup',()=>{drag=false;document.body.style.userSelect='';});
+  const end=e=>{drag=false;document.body.style.userSelect='';try{tb.releasePointerCapture(e.pointerId);}catch(_){}};
+  tb.addEventListener('pointerup',end);tb.addEventListener('pointercancel',end);
 });
 
 /* 6. MENU BAR DROPDOWNS */
@@ -695,15 +730,17 @@ addEventListener('keydown',e=>{if(!(e.metaKey||e.ctrlKey))return;
   const map={a:'about',w:'work',p:'projects',s:'skills',k:'contact',t:'term',r:'projects'};
   const k=e.key.toLowerCase();if(map[k]){e.preventDefault();openWin(map[k]);}});
 
-/* 7. DOCK MAGNIFICATION */
+/* 7. DOCK MAGNIFICATION — only with a real pointer (no fingers) */
 const dock=document.getElementById('dock');
 const items=[...dock.querySelectorAll('.dock-item')];
-dock.addEventListener('mousemove',e=>{items.forEach(it=>{
-  const r=it.getBoundingClientRect(),c=r.left+r.width/2,dist=Math.abs(e.clientX-c);
-  const scale=Math.max(1,1.6-dist/170);
-  it.style.transform=`scale(${scale}) translateY(${-(scale-1)*18}px)`;
-  it.style.margin=`0 ${(scale-1)*7}px`;});});
-dock.addEventListener('mouseleave',()=>items.forEach(it=>{it.style.transform='';it.style.margin='';}));
+if(matchMedia('(hover:hover) and (pointer:fine)').matches){
+  dock.addEventListener('mousemove',e=>{items.forEach(it=>{
+    const r=it.getBoundingClientRect(),c=r.left+r.width/2,dist=Math.abs(e.clientX-c);
+    const scale=Math.max(1,1.6-dist/170);
+    it.style.transform=`scale(${scale}) translateY(${-(scale-1)*18}px)`;
+    it.style.margin=`0 ${(scale-1)*7}px`;});});
+  dock.addEventListener('mouseleave',()=>items.forEach(it=>{it.style.transform='';it.style.margin='';}));
+}
 
 /* 8. TERMINAL TYPE-OUT */
 let termRan=false;
