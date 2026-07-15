@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>*~LuKaSLeAk~* :: REDEFINING DA PERSONAL WEBSITE :: EST. 2004</title>
-<meta name="description" content="Lukas Estifanos — software engineer. The rawest, most uncut personal site on the information superhighway. Best viewed in IE6." />
+<title>LUKASLEAK — Lukas Estifanos · Software Engineer · est. 2004</title>
+<meta name="description" content="Lukas Estifanos — software engineer, full-stack distributed systems. Personal site, one static HTML file. Best viewed in IE6." />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 <style>
 /* ============================================================
@@ -258,6 +258,47 @@ table{border-collapse:separate}
 }
 .tape .btns a:hover{border-style:inset;background:#c00;color:#fff}
 
+/* ---------- ORS slide-thru strip ---------- */
+#orsctl{display:flex;align-items:center;gap:6px;margin-bottom:6px;flex-wrap:wrap}
+#orsctl button{
+  font:bold 11px 'Arial Black',Arial;background:linear-gradient(180deg,#e1306c,#6d1030);
+  color:#fff;border:2px outset #f77;padding:4px 12px;cursor:pointer;
+}
+#orsctl button:active{border-style:inset}
+#orsctl .hint{font:10px 'Comic Sans MS',cursive;color:#f9a}
+#orspos{margin-left:auto;font:bold 11px 'Courier New',monospace;color:var(--lime);background:#020;border:1px inset #060;padding:2px 6px}
+#orsstrip{
+  display:flex;gap:8px;overflow-x:auto;padding:4px 2px 10px;
+  scroll-snap-type:x proximity;cursor:grab;touch-action:pan-x;
+  border:2px inset #333;background:#0a0a0a;
+}
+#orsstrip.grabbin{cursor:grabbing;scroll-snap-type:none}
+#orsstrip::-webkit-scrollbar{height:13px}
+.orspost{flex:0 0 186px;scroll-snap-align:start;border:2px outset #666;background:#161616;user-select:none;-webkit-user-select:none}
+.orscover{
+  aspect-ratio:1;position:relative;display:block;overflow:hidden;text-decoration:none;
+  border-bottom:2px solid #000;
+}
+.orscover::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 3px,rgba(0,0,0,.28) 3px 5px);pointer-events:none}
+.orscover .emo{position:absolute;inset:0;display:grid;place-items:center;font-size:52px;filter:drop-shadow(0 0 8px #000)}
+.orscover .nm{
+  position:absolute;left:0;right:0;bottom:0;padding:4px 6px;z-index:1;
+  font-family:Impact,'Arial Black',sans-serif;font-size:16px;line-height:1;color:#fff;
+  text-transform:uppercase;text-shadow:2px 2px 0 #000;background:linear-gradient(0deg,#000d,transparent);
+}
+.orscover .typ{position:absolute;top:4px;left:4px;z-index:1}
+.orscover .pnum{position:absolute;top:5px;right:5px;z-index:1;font:9px 'Courier New',monospace;color:#fff;background:#000a;padding:0 3px}
+.orsmeta{display:flex;align-items:center;gap:8px;padding:4px 6px;font:10px 'Courier New',monospace;color:#aaa}
+.orsmeta .lk{background:none;border:0;cursor:pointer;font:inherit;color:#ccc;padding:0}
+.orsmeta .lk:hover{color:#f66}
+.orsmeta .lk.liked{color:#f00;text-shadow:0 0 6px #f00}
+.orsmeta a{margin-left:auto;font-size:9px}
+.orscap{font:9.5px Verdana,sans-serif;color:#8a8a8a;padding:0 6px 6px;line-height:1.4}
+.hpop{position:absolute;inset:0;margin:auto;width:70px;height:70px;z-index:2;display:grid;place-items:center;font-size:58px;pointer-events:none;animation:hpop .7s ease-out forwards}
+@keyframes hpop{0%{transform:scale(.2);opacity:0}30%{transform:scale(1.35);opacity:1}70%{transform:scale(1)}100%{transform:scale(1.1) translateY(-14px);opacity:0}}
+#orsring{border:2px inset #444;background:#1a0510;margin-top:6px;padding:2px 0;font-size:11px;color:#fdd}
+#orsring b{color:#fff;background:#e1306c;padding:0 5px;font-family:'Arial Black',sans-serif}
+
 /* ---------- guestbook ---------- */
 .gb{border:1px dashed #444;background:#141414;padding:6px 8px;margin-bottom:7px}
 .gb .who{font-family:'Comic Sans MS',cursive;font-weight:bold;font-size:12px}
@@ -331,21 +372,22 @@ table{border-collapse:separate}
   <!-- ============ visitor bar ============ -->
   <div id="topbar">
     <span>&gt;&gt; YOU ARE VISITOR #<b id="viscount">1,337,806</b> SINCE 06/14/2004 &lt;&lt;</span>
-    <span class="blink">** <span class="rainbow">WELCOME 2 MY WEBSITE</span> **</span>
+    <span class="blink"><span class="rainbow">LUKAS ESTIFANOS · SOFTWARE ENGINEER</span></span>
     <span id="clock">--:--:--</span>
   </div>
 
   <!-- ============ masthead ============ -->
   <div id="masthead">
     <h1 id="logo">Lukas<span class="leak">Leak</span></h1>
-    <div id="tagline">*** REDEFINING THA PERSONAL WEBSITE ***</div>
+    <div id="tagline">REDEFINING THE PERSONAL WEBSITE</div>
     <div class="estd">est. 2004<br>100% RAW &amp; UNCUT<br>NO FRAMEWORKS</div>
   </div>
 
   <div id="nav">
     <a href="#featured">🎬 Videos</a>
+    <a href="#ors">📸 ORS</a>
     <a href="#tapes-sec">💿 Mixtapes</a>
-    <a href="#profile">👤 Da Profile</a>
+    <a href="#profile">👤 Profile</a>
     <a href="#guestbook">📝 Guestbook</a>
     <a href="https://github.com/lukaspestifanos">💾 GitHub</a>
     <a href="mailto:lukasestifanos23@gmail.com" style="color:#ff0">✉ HIRE ME</a>
@@ -354,11 +396,12 @@ table{border-collapse:separate}
   <!-- ============ ticker ============ -->
   <div id="ticker">
     <marquee scrollamount="5">
-      <b>BREAKING</b>&nbsp; Local engineer builds full-stack distributed system where web client, mobile client AND a single Postgres brain all AGREE — witnesses stunned &nbsp;•&nbsp;
-      <b>EXCLUSIVE</b>&nbsp; Multi-agent pipeline caught processing 10,000+ content-generation tasks MONTHLY on camera &nbsp;•&nbsp;
-      <b>ALERT</b>&nbsp; Python monitoring service runs under daily load with ZERO manual intervention... they don't want you to know this &nbsp;•&nbsp;
-      <b>RUMOR</b>&nbsp; Sources say Lukas is AVAILABLE for internship SUMMER 2027... recruiters advised to act fast &nbsp;•&nbsp;
-      <b>THIS JUST IN</b>&nbsp; Site STILL under construction since 2004 and PROUD of it
+      <b>BREAKING</b>&nbsp; Full-stack distributed system ships: web client, mobile client, one Postgres system of record &nbsp;•&nbsp;
+      <b>EXCLUSIVE</b>&nbsp; Multi-agent automation pipeline processing 10,000+ content-generation tasks monthly &nbsp;•&nbsp;
+      <b>REPORT</b>&nbsp; Python monitoring service runs continuously under daily load — zero manual intervention &nbsp;•&nbsp;
+      <b>NOTICE</b>&nbsp; Available for internship, Summer 2027 &nbsp;•&nbsp;
+      <b>ORS</b>&nbsp; Off Record Sounds: 100+ posts — J. Cole, Osamason, Nettspend, Interscope, Destroy Lonely, Prettifun, and more &nbsp;•&nbsp;
+      <b>THIS JUST IN</b>&nbsp; Site under construction since 2004
     </marquee>
   </div>
 
@@ -375,27 +418,28 @@ table{border-collapse:separate}
           <div id="pfp">👨‍💻</div>
           <div style="text-align:center;margin:5px 0"><span class="online">ONLINE NOW!</span></div>
           <table class="proftable">
-            <tr><td>Mood:</td><td>shipping 🚢 (deranged)</td></tr>
+            <tr><td>Mood:</td><td>shipping</td></tr>
             <tr><td>Occupation:</td><td>Full-Stack / Distributed Systems</td></tr>
             <tr><td>School:</td><td>University of Cincinnati — Software Dev Track</td></tr>
-            <tr><td>GPA:</td><td>3.45 / 4.0 (certified)</td></tr>
-            <tr><td>Status:</td><td><span class="blink" style="color:#ff0">SEEKING INTERNSHIP — SUMMER 2027</span></td></tr>
-            <tr><td>Weapons:</td><td>TypeScript, Python, Node, Postgres, Next.js, React Native, Linux</td></tr>
-            <tr><td>Last Login:</td><td id="lastlogin">Today!!</td></tr>
+            <tr><td>GPA:</td><td>3.45 / 4.0</td></tr>
+            <tr><td>Status:</td><td><span class="blink" style="color:#ff0">AVAILABLE FOR INTERNSHIP — SUMMER 2027</span></td></tr>
+            <tr><td>Stack:</td><td>TypeScript, Python, Node, Postgres, Next.js, React Native, Linux</td></tr>
+            <tr><td>Elsewhere:</td><td><a href="https://instagram.com/offrecordsounds">ORS — Off Record Sounds</a> · <a href="#ors">browse the feed</a></td></tr>
+            <tr><td>Last Login:</td><td id="lastlogin">Today</td></tr>
           </table>
-          <div class="extnet">Lukas is in your <b>extended network</b><br><span style="font-size:9px;color:#89a">(whether u like it or not)</span></div>
+          <div class="extnet">Lukas is in your <b>extended network</b></div>
         </div>
       </div>
 
       <!-- player -->
       <div class="panel" id="amp">
         <div class="panel-hd green"><span>♫ Profile Song</span><span style="font-size:9px">winLUK 2.91</span></div>
-        <div class="lcd"><marquee scrollamount="3" id="npmarq">*** NOW PLAYING: untitled_beat_FINAL_v2(USE THIS ONE).mid *** 128kbps *** stolen from a forum in 2005 ***</marquee></div>
+        <div class="lcd"><marquee scrollamount="3" id="npmarq">NOW PLAYING: profile_song.mid — 8-bit loop, synthesized live in your browser via WebAudio · no files, no autoplay</marquee></div>
         <div id="eq"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
         <div class="ctls">
           <button id="bplay" title="play">▶ PLAY</button>
           <button id="bstop">■ STOP</button>
-          <button onclick="alert('winLUK error 0x0BEEF: playlist.m3u not found (it was never real)')">⏭ NEXT</button>
+          <button onclick="alert('This playlist contains one track.')">⏭ NEXT</button>
         </div>
       </div>
 
@@ -404,29 +448,28 @@ table{border-collapse:separate}
         <div class="panel-hd blue"><span>Lukas's Top 8</span><span class="stkr new">STACK</span></div>
         <div class="panel-bd">
           <div id="top8">
-            <div class="bud"><div class="face">🟦</div><b>TypeScript</b>ride or die</div>
-            <div class="bud"><div class="face">🐍</div><b>Python</b>day-1 homie</div>
-            <div class="bud"><div class="face">🐘</div><b>PostgreSQL</b>da brain</div>
-            <div class="bud"><div class="face">🟩</div><b>Node.js</b>backend 4L</div>
-            <div class="bud"><div class="face">▲</div><b>Next.js</b>web side</div>
+            <div class="bud"><div class="face">🟦</div><b>TypeScript</b>primary</div>
+            <div class="bud"><div class="face">🐍</div><b>Python</b>services</div>
+            <div class="bud"><div class="face">🐘</div><b>PostgreSQL</b>the record</div>
+            <div class="bud"><div class="face">🟩</div><b>Node.js</b>backend</div>
+            <div class="bud"><div class="face">▲</div><b>Next.js</b>web</div>
             <div class="bud"><div class="face">📱</div><b>ReactNative</b>+ Expo</div>
-            <div class="bud"><div class="face">🐧</div><b>Linux</b>ubuntu&amp;alma</div>
-            <div class="bud"><div class="face">⚙️</div><b>systemd</b>never sleeps</div>
+            <div class="bud"><div class="face">🐧</div><b>Linux</b>Ubuntu/Alma</div>
+            <div class="bud"><div class="face">⚙️</div><b>systemd</b>deployment</div>
           </div>
-          <div style="text-align:center;margin-top:6px;font-size:9px;color:#667">Tom got dropped from the Top 8 in '08. He knows what he did.</div>
+          <div style="text-align:center;margin-top:6px;font-size:9px;color:#667">In no particular order. Tom was removed in 2008.</div>
         </div>
       </div>
 
       <!-- stats -->
       <div class="panel">
-        <div class="panel-hd orange"><span>Street Numbers</span></div>
+        <div class="panel-hd orange"><span>By The Numbers</span></div>
         <div class="panel-bd" style="font-family:'Courier New',monospace;font-size:11px;line-height:1.9">
-          ⭐ 10,000+ content tasks/month<br>
+          ⭐ 10,000+ content-generation tasks monthly<br>
           ⭐ 4 production workstreams<br>
           ⭐ 50+ active users<br>
           ⭐ 0 manual interventions<br>
-          ⭐ 100% uptime attitude<br>
-          <span style="color:#666;font-size:9px">(numbers certified by my cousin)</span>
+          ⭐ 100+ posts published with ORS
         </div>
       </div>
 
@@ -449,7 +492,7 @@ table{border-collapse:separate}
             <div class="osd">REC ● 00:04:13</div>
             <div class="osd r blink">LIVE</div>
             <div class="playbtn">▶</div>
-            <div class="vtitle">"WHAT'S THE MOVE" — man builds ENTIRE event-discovery app (Ticketmaster + Meetup APIs) and it ACTUALLY WORKS</div>
+            <div class="vtitle">"WHAT'S THE MOVE" — full-stack event discovery · Ticketmaster + Meetup APIs · live demo</div>
           </div>
           <div class="vstats">
             <span>👁 892,441 views</span>
@@ -459,8 +502,36 @@ table{border-collapse:separate}
           </div>
           <div style="font-size:11px;color:#aaa;line-height:1.5;border-top:1px dashed #333;padding-top:6px">
             A full-stack event-discovery app integrating the Ticketmaster &amp; Meetup APIs. Web client, mobile client,
-            one Postgres brain — and they all have to agree. Solo-built. Click the tape to watch it live:
+            one Postgres system of record — and they all have to agree. Solo-built. Click the screen to open the live app:
             <a href="https://tails-mvp-edition.vercel.app">tails-mvp-edition.vercel.app</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ORS -->
+      <div class="panel" id="ors">
+        <div class="panel-hd" style="background:linear-gradient(180deg,#e1306c,#5b0e2b)">
+          <span>📸 OFF RECORD SOUNDS (ORS)</span>
+          <span><span class="stkr new">100+ POSTS</span> <a href="https://instagram.com/offrecordsounds" style="color:#ff0;font-size:9px;text-decoration:none">[+FOLLOW]</a></span>
+        </div>
+        <div class="panel-bd">
+          <div id="orsring">
+            <marquee scrollamount="4"><b>CREDITS</b>&nbsp; J. COLE ★ OSAMASON ★ NETTSPEND ★ INTERSCOPE ★ DESTROY LONELY ★ PRETTIFUN ★ AND MORE ★ <b>ORS</b>&nbsp; sound · edits · content — 100+ posts on <a href="https://instagram.com/offrecordsounds">@offrecordsounds</a> ★</marquee>
+          </div>
+          <div style="font-size:11px;color:#bbb;line-height:1.5;padding:7px 2px">
+            My work with <b style="color:#f9a">ORS — Off Record Sounds</b>: 100+ posts of sound, edits, and content
+            for J. Cole, Osamason, Nettspend, Interscope, Destroy Lonely, Prettifun, and more.
+            Grab the strip and slide through — every post links to the real feed.
+          </div>
+          <div id="orsctl">
+            <button id="orsprev">◀◀ SLIDE</button>
+            <button id="orsnext">SLIDE ▶▶</button>
+            <span class="hint">← drag with your mouse, or swipe →</span>
+            <span id="orspos">POST 001/108</span>
+          </div>
+          <div id="orsstrip"></div>
+          <div style="text-align:center;margin-top:7px;font-size:10px">
+            <a href="https://instagram.com/offrecordsounds">&gt;&gt;&gt; FOLLOW @offrecordsounds ON INSTAGRAM &lt;&lt;&lt;</a>
           </div>
         </div>
       </div>
@@ -473,45 +544,45 @@ table{border-collapse:separate}
 
             <a class="vid" href="https://github.com/lukaspestifanos">
               <div class="vthumb" style="background:linear-gradient(135deg,#3a0ca3,#7209b7 60%,#f72585)">🤖<span class="dur">10:41</span></div>
-              <div class="vt">TRIPTYCH / FLOWSTAGE: multi-agent pipeline does 10,000+ tasks a MONTH and never asks for a raise (INSANE)</div>
+              <div class="vt">TRIPTYCH / FLOWSTAGE — TypeScript multi-agent automation pipelines, 10,000+ content-generation tasks monthly</div>
               <div class="vm">👁 441,092 views &nbsp;★★★★★ &nbsp;<span class="stkr exc">EXCLUSIVE</span></div>
             </a>
 
             <a class="vid" href="https://github.com/lukaspestifanos">
               <div class="vthumb" style="background:linear-gradient(135deg,#001510,#004d2e 60%,#0a0)">🐍<span class="dur">24:07</span></div>
-              <div class="vt">Python monitor service runs 24/7 under daily load with ZERO manual intervention... engineers HATE him</div>
+              <div class="vt">Production data monitoring service (Python) — runs continuously under daily load, zero manual intervention</div>
               <div class="vm">👁 306,558 views &nbsp;★★★★☆ &nbsp;<span class="stkr new">NEW!!</span></div>
             </a>
 
             <a class="vid" href="https://github.com/lukaspestifanos">
               <div class="vthumb" style="background:linear-gradient(135deg,#0b2545,#13315c 55%,#1b4d89)">🐘<span class="dur">7:33</span></div>
-              <div class="vt">WILD: web client and mobile client FORCED to agree by single Postgres brain (multi-tenant, hundreds of concurrent accounts)</div>
+              <div class="vt">Multi-tenant architecture — web + mobile clients on one Postgres system of record, hundreds of concurrent accounts</div>
               <div class="vm">👁 198,404 views &nbsp;★★★★★ &nbsp;<span class="stkr hot">MUST SEE</span></div>
             </a>
 
             <a class="vid" href="https://github.com/lukaspestifanos">
               <div class="vthumb" style="background:linear-gradient(135deg,#3d0000,#750000 60%,#c00)">🚨<span class="dur">3:58</span></div>
-              <div class="vt">Production incident resolution time gets CUT DOWN on camera — monitoring patterns + operational runbooks (footage they tried to delete)</div>
+              <div class="vt">Incident response — monitoring patterns and operational runbooks that cut production resolution time</div>
               <div class="vm">👁 152,377 views &nbsp;★★★★☆ &nbsp;<span class="stkr dirty">RAW</span></div>
             </a>
 
           </div>
           <div style="text-align:center;margin-top:8px;font-size:10px">
-            <a href="https://github.com/lukaspestifanos">&gt;&gt;&gt; CLICK 4 MORE FOOTAGE ON MY GITHUB &lt;&lt;&lt;</a>
+            <a href="https://github.com/lukaspestifanos">&gt;&gt;&gt; FULL ARCHIVE ON GITHUB &lt;&lt;&lt;</a>
           </div>
         </div>
       </div>
 
       <!-- mixtapes -->
       <div class="panel" id="tapes-sec">
-        <div class="panel-hd orange"><span>💿 Da Mixtape Rack</span><span style="font-size:9px">FREE DL · NO ZSHARE</span></div>
+        <div class="panel-hd orange"><span>💿 The Mixtape Rack</span><span style="font-size:9px">FREE DOWNLOADS</span></div>
         <div class="panel-bd">
           <div id="tapes">
 
             <div class="tape">
               <div class="cover" style="background:linear-gradient(160deg,#06202a,#0a4b5c);color:#7fefff">
                 <div class="host">HOSTED BY DJ NODE</div>
-                <div class="ttl">Da Full<br>Stack</div>
+                <div class="ttl">The Full<br>Stack</div>
                 <div class="vol">VOL. 3 · 2026</div>
                 <div class="pa">PARENTAL<br>ADVISORY<br>TYPE SAFE</div>
               </div>
@@ -522,7 +593,7 @@ table{border-collapse:separate}
             <div class="tape">
               <div class="cover" style="background:linear-gradient(160deg,#2b0303,#8a1010);color:#ffd6d6">
                 <div class="host">HOSTED BY DJ SYSTEMD</div>
-                <div class="ttl">Deploy or<br>Die Tryin</div>
+                <div class="ttl">Deployment<br>Automation</div>
                 <div class="vol">AUTOMATION EDITION</div>
                 <div class="pa">PARENTAL<br>ADVISORY<br>NO DOWNTIME</div>
               </div>
@@ -562,14 +633,13 @@ table{border-collapse:separate}
         <div class="panel-bd">
           <div id="hire">
             <span class="fire" style="font-size:30px">HIRE ME</span><br>
-            <span class="big glitter">AVAILABLE 4 INTERNSHIP — SUMMER 2027</span>
+            <span class="big glitter">AVAILABLE FOR INTERNSHIP — SUMMER 2027</span>
             <div style="font-size:11px;color:#ccc;margin-top:6px;line-height:1.5">
-              Got an internship, a hard systems problem, or just wanna talk shop?? My inbox is OPEN like a 24hr gas station.
-              Serious inquiries + rap beefs only.
+              Got an internship, a hard systems problem, or just want to talk shop? My inbox is open.
             </div>
-            <a class="mail" href="mailto:lukasestifanos23@gmail.com">✉ EMAIL LUKAS RIGHT NOW!!</a>
+            <a class="mail" href="mailto:lukasestifanos23@gmail.com">✉ EMAIL LUKAS</a>
             <div style="margin-top:8px;font-size:10px;font-family:'Courier New',monospace;color:#9f9">
-              AIM: lukas@os &nbsp;·&nbsp; gh: <a href="https://github.com/lukaspestifanos">lukaspestifanos</a> &nbsp;·&nbsp; response time: faster than dial-up
+              AIM: lukas@os &nbsp;·&nbsp; github: <a href="https://github.com/lukaspestifanos">lukaspestifanos</a> &nbsp;·&nbsp; instagram: <a href="https://instagram.com/offrecordsounds">@offrecordsounds</a>
             </div>
           </div>
         </div>
@@ -577,25 +647,25 @@ table{border-collapse:separate}
 
       <!-- guestbook -->
       <div class="panel" id="guestbook">
-        <div class="panel-hd blue"><span>📝 Sign Da Guestbook</span><span id="gbcount" style="font-size:9px">14,203 comments</span></div>
+        <div class="panel-hd blue"><span>📝 Sign The Guestbook</span><span id="gbcount" style="font-size:9px">14,203 comments</span></div>
         <div class="panel-bd">
           <div id="gblist">
             <div class="gb"><span class="when">06/12/2026 3:41 AM</span><span class="who" style="color:#7fd4ff">Tom (myspace)</span>
-              <p>thanks for the add bro. sick page. can i get back in the top 8</p></div>
-            <div class="gb"><span class="when">05/30/2026 11:58 PM</span><span class="who" style="color:#f6c">xX_P0stgr3s_Qu33n_Xx</span>
-              <p>omg ur schema is normalized af 😍😍 3NF or nothin. page looks fire, the marquee made my laptop fan spin up (in a good way)</p></div>
-            <div class="gb"><span class="when">05/14/2026 2:12 PM</span><span class="who" style="color:#8f8">DJ_SYSTEMD_OFFICIAL</span>
-              <p>this man's service unit files r CLEAN. restart=always type loyalty. deploy or die tryin vol 2 when??</p></div>
-            <div class="gb"><span class="when">04/02/2026 9:03 AM</span><span class="who" style="color:#fa0">recruiter_amanda_2007</span>
-              <p>Hi Lukas! Saw ur profile. R u available Summer 2027? Pls respond, my AIM is always on</p></div>
-            <div class="gb"><span class="when">03/28/2026 4:44 AM</span><span class="who" style="color:#f66">ripzShaRe4eva</span>
-              <p>first. also the mixtape links actually work?? respect. no dead megaupload links on this site 🫡</p></div>
+              <p>Thanks for the add. Solid page.</p></div>
+            <div class="gb"><span class="when">05/30/2026 11:58 PM</span><span class="who" style="color:#f6c">postgres_enthusiast</span>
+              <p>The schema is properly normalized. The marquee tags are a bold choice. Respect on both counts.</p></div>
+            <div class="gb"><span class="when">05/14/2026 2:12 PM</span><span class="who" style="color:#8f8">dj_systemd</span>
+              <p>Clean unit files. Restart=always. This is what reliability looks like.</p></div>
+            <div class="gb"><span class="when">04/02/2026 9:03 AM</span><span class="who" style="color:#fa0">recruiter_2007</span>
+              <p>Hi Lukas — saw the profile. Are you available Summer 2027? My AIM is always on.</p></div>
+            <div class="gb"><span class="when">03/28/2026 4:44 AM</span><span class="who" style="color:#f66">archive_diver</span>
+              <p>Every link on this site actually works. No dead file-host links. Rare.</p></div>
           </div>
           <form id="gbform">
-            <input id="gbname" maxlength="32" placeholder="ur name / screen name" required>
-            <textarea id="gbmsg" rows="3" maxlength="400" placeholder="leave some love... or hate... we post everything (liveleak rules)" required></textarea>
-            <button type="submit">✍ POST IT</button>
-            <span style="font-size:9px;color:#666;margin-left:8px">(saved to YOUR browser only — this is a static site, we keep it real)</span>
+            <input id="gbname" maxlength="32" placeholder="name / screen name" required>
+            <textarea id="gbmsg" rows="3" maxlength="400" placeholder="leave a comment" required></textarea>
+            <button type="submit">✍ POST</button>
+            <span style="font-size:9px;color:#666;margin-left:8px">(saved to your browser only — this is a static site)</span>
           </form>
         </div>
       </div>
@@ -621,8 +691,8 @@ table{border-collapse:separate}
       —=≡ <a href="https://github.com/lukaspestifanos">« prev</a> · MEMBER OF THE <span class="glitter">FULL-STACK WEBRING</span> · <a href="https://tails-mvp-edition.vercel.app">next »</a> ≡=—
     </div>
     <div style="margin-top:8px;color:#555">
-      © 2004–2026 LukasLeak Industries · all beats stolen respectfully · <span class="rainbow">no rights reserved</span><br>
-      *valid is a strong word · this site does NOT use cookies, it uses localStorage like a gentleman
+      © 2004–2026 Lukas Estifanos · <span class="rainbow">no rights reserved</span><br>
+      *valid is a strong word · no cookies — localStorage only
     </div>
   </div>
 
@@ -632,11 +702,11 @@ table{border-collapse:separate}
 <div id="popup">
   <div class="bar"><span>⚠ Message from lukasleak.com</span><button onclick="document.getElementById('popup').classList.remove('show')">✕</button></div>
   <div class="bd">
-    <div class="huge blink-fast">🎉 CONGRATULATION!!! 🎉</div>
-    <p>You are the <b>1,000,000th visitor</b> to this website!*</p>
-    <p>You have been selected to receive <b>ONE (1) FREE motivated full-stack intern</b>, Summer 2027.</p>
-    <p><a href="mailto:lukasestifanos23@gmail.com" style="font-weight:bold;color:#00c">&gt;&gt; CLICK HERE 2 CLAIM UR PRIZE &lt;&lt;</a></p>
-    <p style="font-size:8px;color:#556">*every visitor is the 1,000,000th visitor. offer valid while supplies last (there is one of me)</p>
+    <div class="huge blink-fast">🎉 CONGRATULATIONS 🎉</div>
+    <p>You are the <b>1,000,000th visitor</b> to this website.*</p>
+    <p>You have been selected to receive <b>one (1) motivated full-stack intern</b>, Summer 2027.</p>
+    <p><a href="mailto:lukasestifanos23@gmail.com" style="font-weight:bold;color:#00c">&gt;&gt; CLAIM YOUR PRIZE &lt;&lt;</a></p>
+    <p style="font-size:8px;color:#556">*every visitor is the 1,000,000th visitor. offer valid while supplies last — there is one of me.</p>
   </div>
 </div>
 
@@ -648,7 +718,7 @@ function tick(){
     d.toLocaleTimeString('en-US',{hour12:true})+' EST (probably)';
 }
 tick();setInterval(tick,1000);
-document.getElementById('lastlogin').textContent=new Date().toLocaleDateString('en-US')+' (rite now!!)';
+document.getElementById('lastlogin').textContent=new Date().toLocaleDateString('en-US');
 
 /* ================= visitor counter ================= */
 (function(){
@@ -736,6 +806,99 @@ setInterval(function(){
     var c=document.getElementById('gbcount');
     c.textContent=(14203+saved.length).toLocaleString('en-US')+' comments';
   });
+})();
+
+/* ================= ORS slide-thru feed ================= */
+(function(){
+  var IG='https://instagram.com/offrecordsounds';
+  var strip=document.getElementById('orsstrip');
+  var clients=[
+    {n:'J. COLE',e:'👑'},{n:'OSAMASON',e:'🌀'},{n:'NETTSPEND',e:'⚡'},
+    {n:'INTERSCOPE',e:'🏢'},{n:'DESTROY LONELY',e:'🖤'},{n:'PRETTIFUN',e:'💎'}
+  ];
+  var extras=[
+    {n:'UNRELEASED',e:'🔒'},{n:'STUDIO SESSION',e:'🎚️'},{n:'TOUR RECAP',e:'🚌'},
+    {n:'SOUND PACK',e:'🔊'},{n:'BTS FOOTAGE',e:'🎬'},{n:'CROWD FOOTAGE',e:'🙌'},
+    {n:'ON THE BOARD',e:'🎛️'},{n:'NIGHT SESSION',e:'🌙'}
+  ];
+  var types=['SNIPPET','SOUND','EDIT','VISUAL','BTS','LIVE','COVER','RECAP'];
+  var N=108,html='';
+  for(var i=0;i<N;i++){
+    var seed=((i+7)*2654435761)>>>0;
+    var isClient=i%3!==2;
+    var c=isClient?clients[i%clients.length]:extras[Math.floor(i/3)%extras.length];
+    var t=types[seed%types.length];
+    var likes=800+seed%39000, cmts=8+seed%420;
+    var h=(i*47)%360, h2=(h+45)%360;
+    var pat=['repeating-linear-gradient(45deg,rgba(0,0,0,.28) 0 8px,transparent 8px 16px),',
+             'repeating-radial-gradient(circle at 30% 30%,rgba(0,0,0,.25) 0 5px,transparent 5px 14px),',
+             'repeating-linear-gradient(90deg,rgba(0,0,0,.25) 0 10px,transparent 10px 20px),'][i%3];
+    var bg=pat+'linear-gradient(135deg,hsl('+h+',65%,16%),hsl('+h2+',75%,36%))';
+    html+='<div class="orspost">'
+      +'<a class="orscover" draggable="false" href="'+IG+'" target="_blank" rel="noopener" style="background:'+bg+'">'
+      +'<span class="emo">'+c.e+'</span>'
+      +'<span class="typ stkr '+(isClient?'exc':'hot')+'">'+t+'</span>'
+      +'<span class="pnum">#'+String(N-i).padStart(3,'0')+'</span>'
+      +'<span class="nm">'+(isClient?'ORS × '+c.n:c.n)+'</span>'
+      +'</a>'
+      +'<div class="orsmeta">'
+      +'<button class="lk" type="button">♥ <b>'+likes.toLocaleString('en-US')+'</b></button>'
+      +'<span>💬 '+cmts+'</span>'
+      +'<a href="'+IG+'" target="_blank" rel="noopener">open ↗</a>'
+      +'</div>'
+      +'<div class="orscap">'+(isClient?t.toLowerCase()+' — '+c.n+' · sound by @offrecordsounds':t.toLowerCase()+' — @offrecordsounds')+' #ORS</div>'
+      +'</div>';
+  }
+  strip.innerHTML=html;
+
+  /* grab-n-slide (mouse; touch uses native pan via touch-action) */
+  var down=false,sx=0,sl=0,moved=0;
+  strip.addEventListener('pointerdown',function(e){
+    if(e.pointerType!=='mouse')return;
+    down=true;moved=0;sx=e.clientX;sl=strip.scrollLeft;
+    strip.classList.add('grabbin');
+    strip.setPointerCapture(e.pointerId);
+  });
+  strip.addEventListener('pointermove',function(e){
+    if(!down)return;
+    var dx=e.clientX-sx;
+    if(Math.abs(dx)>moved)moved=Math.abs(dx);
+    strip.scrollLeft=sl-dx;
+  });
+  ['pointerup','pointercancel'].forEach(function(ev){
+    strip.addEventListener(ev,function(){down=false;strip.classList.remove('grabbin')});
+  });
+  /* a drag shouldn't count as a click on a post */
+  strip.addEventListener('click',function(e){
+    if(moved>6){e.preventDefault();e.stopPropagation();moved=0;}
+  },true);
+
+  /* like hearts */
+  strip.addEventListener('click',function(e){
+    var lk=e.target.closest('.lk');
+    if(!lk)return;
+    var b=lk.querySelector('b');
+    var n=parseInt(b.textContent.replace(/,/g,''),10);
+    var on=lk.classList.toggle('liked');
+    b.textContent=(n+(on?1:-1)).toLocaleString('en-US');
+    if(on){
+      var cover=lk.closest('.orspost').querySelector('.orscover');
+      var hp=document.createElement('span');
+      hp.className='hpop';hp.textContent='❤';
+      cover.appendChild(hp);
+      setTimeout(function(){hp.remove()},700);
+    }
+  });
+
+  /* paging buttons + live position counter */
+  function page(dir){strip.scrollBy({left:dir*strip.clientWidth,behavior:'smooth'})}
+  document.getElementById('orsprev').addEventListener('click',function(){page(-1)});
+  document.getElementById('orsnext').addEventListener('click',function(){page(1)});
+  var pos=document.getElementById('orspos');
+  strip.addEventListener('scroll',function(){
+    var i=Math.min(N,Math.round(strip.scrollLeft/194)+1);
+    pos.textContent='POST '+String(i).padStart(3,'0')+'/'+N;
+  },{passive:true});
 })();
 
 /* ================= "profile song" — webaudio chiptune ================= */
