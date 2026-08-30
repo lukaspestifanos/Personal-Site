@@ -1,26 +1,5 @@
 import { $, el } from "../lib/dom";
-import {
-  education,
-  highlights,
-  jobs,
-  project,
-  skillGroups,
-} from "../data/resume";
-
-export function renderHighlights(): void {
-  const mount = $("#highlights");
-  for (const h of highlights) {
-    const attrs: Record<string, string> = { class: "n", "data-count": String(h.value) };
-    if (h.suffix) attrs["data-suffix"] = h.suffix;
-    if (h.decimals) attrs["data-decimals"] = String(h.decimals);
-    mount.append(
-      el("div", { class: "tile rv", "data-tilt": "" }, [
-        el("div", attrs, ["0"]),
-        el("div", { class: "k" }, [h.label]),
-      ]),
-    );
-  }
-}
+import { education, jobs, project, skillGroups } from "../data/resume";
 
 export function renderJobs(): void {
   const mount = $("#jobs");
@@ -57,16 +36,16 @@ export function renderJobs(): void {
 
 export function renderProject(): void {
   const mount = $("#project");
-  const art = el("div", { class: "proj-art", "aria-hidden": "true" }, [
+  const art = el("div", { class: "proj-art" }, [
     el("div", { class: "proj-badge" }, [project.badge]),
-    el("div", { class: "phone" }, [
-      el("div", { class: "bar b" }),
-      el("div", { class: "bar" }),
-      el("div", { class: "bar w" }),
-      el("div", { class: "msg" }, ["Bengals up 3 with 2:10 left. Who has it?"]),
-      el("div", { class: "msg me" }, ["Burrow. Every time."]),
-      el("div", { class: "msg" }, ["Live: CIN 27 BAL 24 · Q4"]),
-    ]),
+    ...project.shots.map((shot) =>
+      el("img", {
+        class: `shot ${shot.kind}`,
+        src: shot.src,
+        alt: shot.alt,
+        loading: "lazy",
+      }),
+    ),
   ]);
 
   const body = el("div", { class: "proj-body" }, [

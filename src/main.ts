@@ -10,13 +10,11 @@ import { initTilt } from "./modules/tilt";
 import { initReveal } from "./modules/reveal";
 import {
   renderEducation,
-  renderHighlights,
   renderJobs,
   renderProject,
   renderSkills,
 } from "./render/sections";
 
-renderHighlights();
 renderJobs();
 renderProject();
 renderSkills();

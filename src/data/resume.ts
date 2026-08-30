@@ -1,12 +1,5 @@
 /** All site content, typed. Rendering is derived from this file only. */
 
-export interface Highlight {
-  value: number;
-  suffix?: string;
-  decimals?: number;
-  label: string;
-}
-
 export interface Bullet {
   tag: string;
   html: string;
@@ -28,13 +21,6 @@ export interface SkillGroup {
   color: string;
   items: string[];
 }
-
-export const highlights: Highlight[] = [
-  { value: 30, label: "Pipelines running concurrently, quality scored with selective retries" },
-  { value: 750, label: "Entity knowledge graph on Postgres and pgvector, self-wiring" },
-  { value: 13, label: "Role-scoped views served from a single backend" },
-  { value: 10000, suffix: "+", label: "Generation tasks per month across 100+ distribution accounts" },
-];
 
 export const jobs: Job[] = [
   {
@@ -120,6 +106,10 @@ export const project = {
   paragraphs: [
     "A sports conversation platform: native iOS app and web app on one backend, carrying live data across 6 sports and 10+ leagues. Solo designed, built, and shipped through App Store review.",
     "Started as a WebView wrapper, rebuilt the frontend natively when that was not good enough, and kept both clients in sync against a single API.",
+  ],
+  shots: [
+    { src: "/tails-feed.png", alt: "Tails feed", kind: "feed" },
+    { src: "/tails-games.png", alt: "Live scores in Tails", kind: "games" },
   ],
 };
 
