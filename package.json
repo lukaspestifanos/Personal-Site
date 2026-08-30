@@ -1,0 +1,17 @@
+{
+  "name": "lukasestifanos-xyz",
+  "private": true,
+  "version": "2.0.0",
+  "type": "module",
+  "description": "Personal site for Lukas Estifanos. Vite + strict TypeScript, zero runtime dependencies.",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "vite": "^6.0.7"
+  }
+}

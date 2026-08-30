@@ -1,0 +1,45 @@
+/* Design tokens.
+   White base and colour stops taken from feralui.dev gradient palettes:
+   AKEBONO (daybreak), AERIAL, SOLAR. Type is the system stack. */
+:root {
+  --bg: #fffdf7;          /* feralui "Paper" */
+  --bg-soft: #fbf8f0;
+  --card: #ffffff;
+  --ink: #251f28;
+  --muted: #6f6876;
+  --faint: #a39daa;
+  --line: rgba(37, 31, 40, 0.09);
+  --line-strong: rgba(37, 31, 40, 0.16);
+
+  /* AKEBONO daybreak */
+  --peach: #ffb65c;
+  --rose: #e88aa0;
+  --sky: #7ac7de;
+  /* SOLAR */
+  --gold: #ffe27a;
+  --tangerine: #ff9a4a;
+  --punch: #ff4f63;
+  --violet: #8c3deb;
+  /* AERIAL */
+  --blue: #5ab8f4;
+  --indigo: #6269e8;
+
+  --grad: linear-gradient(100deg, var(--tangerine) 0%, var(--rose) 40%, var(--violet) 100%);
+
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+    "Helvetica Neue", "Segoe UI", Roboto, Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+
+  --r-md: 12px;
+  --r-lg: 18px;
+  --r-xl: 26px;
+  --r-pill: 999px;
+
+  --shadow-sm: 0 1px 2px rgba(37, 31, 40, 0.05), 0 4px 12px rgba(37, 31, 40, 0.05);
+  --shadow-md: 0 2px 4px rgba(37, 31, 40, 0.04), 0 12px 32px -8px rgba(37, 31, 40, 0.12);
+  --shadow-lg: 0 4px 8px rgba(37, 31, 40, 0.04), 0 24px 64px -16px rgba(37, 31, 40, 0.18);
+
+  --max: 1080px;
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out: cubic-bezier(0.2, 0.6, 0.2, 1);
+}

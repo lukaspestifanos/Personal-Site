@@ -1,28 +1,44 @@
 # lukasestifanos.xyz
 
-Personal site for Lukas Estifanos, forward deployed engineer in New York.
+Personal site for Lukas Estifanos, software engineer in New York.
 
-One static `index.html`, no build step, no framework. Deploys as-is on Vercel.
+## Stack
 
-## What is in it
+- Vite + strict TypeScript (`noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`)
+- Zero runtime dependencies, no frameworks, no trackers
+- All content lives in one typed module (`src/data/resume.ts`); the DOM is rendered from it
+- System font stack throughout
 
-- Palette and surface tokens from the ThreeUI dark theme (MengTo/threeui, MIT)
-- Colour stops from feralui.dev Japanese gradients: SHIDEN (neon haze), KYOKKOU (aurora), AKEBONO (daybreak)
-- Type: Instrument Serif and JetBrains Mono (ThreeUI), Fraunces and Inter (feralui), loaded from Google Fonts
-- Interaction ported to vanilla JS from ThreeUI: animated top dock, constellation field background, decode headings
-- Pip, an 8-bit pixel mascot that walks visitors through each section
-- Content parsed from the resume; no em dashes anywhere
+## Architecture
 
-## Run locally
+```
+src/
+  data/resume.ts       typed content: highlights, jobs, project, skills, education
+  render/sections.ts   builds the DOM from the data module
+  modules/wash.ts      animated soft-gradient background (canvas, CSS-blurred, ~1% of viewport pixels)
+  modules/tilt.ts      pointer-tracked card tilt + glare, spring-damped
+  modules/nav.ts       proximity spring on nav items + IntersectionObserver scrollspy
+  modules/reveal.ts    scroll reveals and count-up numbers
+  lib/dom.ts           element builder and environment helpers
+  styles/              tokens, base, components, sections
+```
+
+Every animation respects `prefers-reduced-motion` and disables pointer effects
+on coarse pointers. The background canvas renders at a fraction of the viewport
+and is blurred by the compositor, so the wash costs almost nothing.
+
+Colour palette from feralui.dev gradient presets (AKEBONO, AERIAL, SOLAR).
+
+## Develop
 
 ```bash
-python3 -m http.server   # then open http://localhost:8000
+npm install
+npm run dev        # dev server
+npm run build      # typecheck + production build to dist/
+npm run preview    # serve the production build
 ```
 
 ## Deploy
 
-```bash
-vercel --prod
-```
-
-Framework preset: Other. Build command: none. Output directory: `./`.
+Vercel, configured by `vercel.json` (framework: vite, output: `dist`).
+CI runs typecheck and build on every push.
