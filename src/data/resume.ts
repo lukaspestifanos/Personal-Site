@@ -25,13 +25,13 @@ export interface SkillGroup {
 export const jobs: Job[] = [
   {
     company: "Triptych Digital",
-    detail: "Cantina partnership",
+    detail: "placed on site at Cantina",
     role: "Forward Deployed Engineer",
     note: "First engineer hired, sole technical hire on site",
     when: "Aug 2026 to Present",
     where: "New York, NY",
     summary:
-      "Cantina is a 440+ person platform backed by a16z, Benchmark, Greycroft, and Founders Fund, founded by Sean Parker. I report to the acting CTO, sit in client communications and GTM planning, and turn an ambiguous distribution deal into shipped production systems.",
+      "Cantina is a 440+ person platform backed by a16z, Benchmark, Greycroft, and Founders Fund, founded by Sean Parker. I am embedded at Cantina, report to the acting CTO, and sit in client communications and GTM planning, and turn an ambiguous distribution deal into shipped production systems.",
     bullets: [
       {
         tag: "Distributed",
