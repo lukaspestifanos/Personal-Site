@@ -190,9 +190,9 @@
 .bearcat {
   position: fixed;
   left: 0;
-  bottom: 14px;
-  width: 66px;
-  height: auto;
+  bottom: 10px;
+  width: 64px;
+  height: 96px;
   z-index: 70;
   pointer-events: none;
   image-rendering: pixelated;

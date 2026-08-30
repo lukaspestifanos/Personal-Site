@@ -1,48 +1,73 @@
 import { prefersReducedMotion } from "../lib/dom";
 
-/** Easter egg: hover "University of Cincinnati" and a tiny pixel Bearcat
- *  sprints across the bottom of the viewport. UC red and black. */
+/** Easter egg: hover "University of Cincinnati" and an 8-bit UC Bearcat
+ *  mascot walks across the bottom of the viewport on two legs.
+ *  Dark fur, red jersey, white C. */
 
 const COLORS: Record<string, string> = {
-  k: "#1a1a1a",
-  r: "#e00122",
-  w: "#ffffff",
+  k: "#1a1a1a", // fur
+  r: "#e00122", // UC red jersey
+  w: "#ffffff", // eyes, jersey C
+  t: "#d9b38c", // muzzle
 };
 
-const W = 22;
-const H = 13;
+const W = 16;
+const H = 24;
 
-// side view, running right; k body, r jersey band, w eye
+// upright mascot, facing forward, mid-stride
 const FRAME_A: string[] = [
-  "......................",
-  "..............kk.k....",
-  ".............kkkkkk...",
-  ".............kkkkwk...",
-  "..kk.........kkkkkk...",
-  ".kkkkkkkkkkkkkkkkkk...",
-  "kk.kkrrrrrrrrkkkkk....",
-  "...kkrrrrrrrrkkkk.....",
-  "...kkkkkkkkkkkkkk.....",
-  "...kk....kk....kk.....",
-  "..kk......kk....kk....",
-  "......................",
-  "......................",
+  "................",
+  "..kk......kk....",
+  "..kkkkkkkkkk....",
+  ".kkkkkkkkkkkk...",
+  ".kkwwkkkkwwkk...",
+  ".kkkkkkkkkkkk...",
+  ".kkkttttttkkk...",
+  "..kkttttttkk....",
+  "..kktkkkktkk....",
+  "...kkttttkk.....",
+  "....kkkkkk......",
+  "...rrrrrrrr.....",
+  "..krrwwwwrrrk...",
+  "..krrwrrrrrrk...",
+  "..krrwwwwrrrk...",
+  "..kkrrrrrrrkk...",
+  "....kkkkkk......",
+  "....kkkkkk......",
+  "...kkk...kkk....",
+  "..kkk.....kkk...",
+  "..kkk......kkk..",
+  ".kkk........kkk.",
+  ".kkkk.......kkkk",
+  "................",
 ];
 
+// legs passing under the body
 const FRAME_B: string[] = [
-  "......................",
-  "..............kk.k....",
-  ".............kkkkkk...",
-  ".............kkkkwk...",
-  "..kk.........kkkkkk...",
-  ".kkkkkkkkkkkkkkkkkk...",
-  "kk.kkrrrrrrrrkkkkk....",
-  "...kkrrrrrrrrkkkk.....",
-  "...kkkkkkkkkkkkkk.....",
-  "....kk..kk...kkkk.....",
-  ".....kk..kk...kk......",
-  "......................",
-  "......................",
+  "................",
+  "..kk......kk....",
+  "..kkkkkkkkkk....",
+  ".kkkkkkkkkkkk...",
+  ".kkwwkkkkwwkk...",
+  ".kkkkkkkkkkkk...",
+  ".kkkttttttkkk...",
+  "..kkttttttkk....",
+  "..kktkkkktkk....",
+  "...kkttttkk.....",
+  "....kkkkkk......",
+  "...rrrrrrrr.....",
+  "..krrwwwwrrrk...",
+  "..krrwrrrrrrk...",
+  "..krrwwwwrrrk...",
+  "..kkrrrrrrrkk...",
+  "....kkkkkk......",
+  "....kkkkkk......",
+  "....kkk.kkk.....",
+  "....kkk.kkk.....",
+  "....kkk.kkk.....",
+  "....kkk.kkk.....",
+  "...kkkk.kkkk....",
+  "................",
 ];
 
 function paint(ctx: CanvasRenderingContext2D, grid: string[]): void {
@@ -80,7 +105,7 @@ export function initBearcat(triggers: HTMLElement[]): void {
     }
 
     const start = performance.now();
-    const duration = 3200;
+    const duration = 4400;
 
     const frame = (now: number): void => {
       const p = (now - start) / duration;
@@ -89,10 +114,10 @@ export function initBearcat(triggers: HTMLElement[]): void {
         running = false;
         return;
       }
-      const x = -90 + (window.innerWidth + 180) * p;
-      const hop = Math.abs(Math.sin(p * Math.PI * 16)) * 7;
-      canvas.style.transform = `translate(${x.toFixed(1)}px, ${(-hop).toFixed(1)}px)`;
-      paint(ctx, Math.floor(now / 90) % 2 === 0 ? FRAME_A : FRAME_B);
+      const x = -80 + (window.innerWidth + 160) * p;
+      const bob = Math.abs(Math.sin(p * Math.PI * 22)) * 2.5;
+      canvas.style.transform = `translate(${x.toFixed(1)}px, ${(-bob).toFixed(1)}px)`;
+      paint(ctx, Math.floor(now / 150) % 2 === 0 ? FRAME_A : FRAME_B);
       requestAnimationFrame(frame);
     };
     requestAnimationFrame(frame);
