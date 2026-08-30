@@ -1,52 +1,28 @@
-# LukasLeak dot com
+# lukasestifanos.xyz
 
-A personal site that parties like it's 2006. One part LiveLeak, one part DatPiff,
-one part tweaked-out MySpace profile, all early-HTML energy: marquees, hit
-counters, a Top 8, a mixtape rack, glitter text, a sparkle cursor trail, a
-guestbook, and a fake Winamp player that plays an actual WebAudio chiptune.
+Personal site for Lukas Estifanos, forward deployed engineer in New York.
 
-No build step, no dependencies, no frameworks — one static `index.html`.
-(The footer badge says "POWERED BY 1 HTML FILE" and it is not lying.)
+One static `index.html`, no build step, no framework. Deploys as-is on Vercel.
+
+## What is in it
+
+- Palette and surface tokens from the ThreeUI dark theme (MengTo/threeui, MIT)
+- Colour stops from feralui.dev Japanese gradients: SHIDEN (neon haze), KYOKKOU (aurora), AKEBONO (daybreak)
+- Type: Instrument Serif and JetBrains Mono (ThreeUI), Fraunces and Inter (feralui), loaded from Google Fonts
+- Interaction ported to vanilla JS from ThreeUI: animated top dock, constellation field background, decode headings
+- Pip, an 8-bit pixel mascot that walks visitors through each section
+- Content parsed from the resume; no em dashes anywhere
 
 ## Run locally
 
 ```bash
-# any static server works
 python3 -m http.server   # then open http://localhost:8000
 ```
 
-Or just open `index.html` in a browser. Everything is inline — no fonts, no
-CDNs, no external images. Works offline like it's on a Zip disk.
-
-## Deploy to Vercel
-
-This folder *is* the deployable site — static project, no build command,
-no framework preset.
+## Deploy
 
 ```bash
-npm i -g vercel        # if you don't have it
-vercel                 # preview deploy
-vercel --prod          # production deploy
+vercel --prod
 ```
 
-When prompted: framework preset = **Other**, build command = **(none)**,
-output directory = **./** (the default).
-
-`vercel.json` already sets `cleanUrls` and sensible cache headers.
-
-## What's in here
-
-| File          | Purpose                                                    |
-|---------------|------------------------------------------------------------|
-| `index.html`  | The whole site — markup, styles, scripts, chiptune, chaos. |
-| `favicon.svg` | The iCarly pineapple, used as the tab icon.                |
-| `vercel.json` | Static-hosting config for Vercel.                          |
-
-## Notes
-
-- The guestbook and visitor counter persist to `localStorage` only — it's a
-  static site, nothing is sent anywhere.
-- The "1,000,000th visitor" popup shows once per browser session. Every
-  visitor is the 1,000,000th visitor.
-- Best viewed in IE6 at 800×600. (Renders fine everywhere else too,
-  including phones, regrettably.)
+Framework preset: Other. Build command: none. Output directory: `./`.
